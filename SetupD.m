@@ -147,7 +147,7 @@ for d = 1
     Xin.D.Sys.PointGreyCam(i).RecUpdateRate =	NaN;
     Xin.D.Sys.PointGreyCam(i).RecFrameBlockNum =        NaN;     
 	Xin.D.Sys.PointGreyCam(i).UpdatePreviewHistogram =  0;  
-	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFramePupil;
+	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame;
     
     i = 2;
     Xin.D.Sys.PointGreyCam(i).DeviceName =      'Flea3 FL3-U3-13S2C';
