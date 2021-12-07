@@ -1,4 +1,4 @@
-function SetupD
+ function SetupD
 %% SetupD
 % To setup all the preset parameters for following procedures 
 
@@ -44,7 +44,7 @@ for d = 1
     if ~isfield(Xin.D.Sys, 'Name')      % No defined in the main program yet
         Xin.D.Sys.Name =        'XINTRINSIC';
     end    
-        Xin.D.Sys.DataDir =     ['D:\=',Xin.D.Sys.Name,'=\'];
+        Xin.D.Sys.DataDir =     ['D:',filesep,Xin.D.Sys.Name,filesep];
     if isempty(dir(Xin.D.Sys.DataDir))  % Create the Sys.Data folder if not yet
         mkdir(Xin.D.Sys.DataDir);
     end     
@@ -66,9 +66,9 @@ for d = 1
         {'16307994'},...
         'VariableNames',            SysConfigVarName)];
     Xin.D.Sys.Configurations = [Xin.D.Sys.Configurations; table(...
-        {'Pointgrey_15452576_Xin2.0'},...
+        {'Pointgrey_17475746_Freiwald'},...
         {'PointGrey'},...
-        {'15452576'},...
+        {'17475746'},...
         'VariableNames',            SysConfigVarName)];
     Xin.D.Sys.Configurations = [Xin.D.Sys.Configurations; table(...
         {'Thorlabs_??????_Xin2.1?'},...
@@ -79,7 +79,7 @@ for d = 1
 	%%%%%%%%%%%%%%%%%%%%%%% System Light Configuration Information
     Xin.D.Sys.Light.Source =        'Green';
     Xin.D.Sys.Light.Wavelength =    530;
-    Xin.D.Sys.Light.Sources =       {'Amber', 'Green', 'Blue', 'Red', 'FRed', 'NIR'};
+    Xin.D.Sys.Light.Sources =       {'White', 'Green', 'Blue', 'Red', 'FRed', 'NIR'};
     Xin.D.Sys.Light.Wavelengths = 	[ 590,     530,     470,    625,   730,    850 ];
     
     Xin.D.Sys.Light.Port =          'Koehler';
@@ -93,13 +93,13 @@ for d = 1
     
     Xin.D.Sys.Light.Monitoring =    'N';    % N: No; S: Slow; F: Fast
     
-    Xin.D.Sys.Light.Diffuser =      15;
+    Xin.D.Sys.Light.Diffuser =      10;
     Xin.D.Sys.Light.Diffusers =     [   0   5   10  15  20];
     
 	%%%%%%%%%%%%%%%%%%%%%%% System CameraLens Configuration Information
-    Xin.D.Sys.CameraLens.Angle =        74;
-    Xin.D.Sys.CameraLens.Aperture =     1.9;
-    Xin.D.Sys.CameraLens.Apertures =    [1.9 2.8 4 5.6 8 11 16];
+    Xin.D.Sys.CameraLens.Angle =        318;
+    Xin.D.Sys.CameraLens.Aperture =     1.8;
+    Xin.D.Sys.CameraLens.Apertures =    [1.8 2.8 4 5.6 8 11 16];
     
     %%%%%%%%%%%%%%%%%%%%%%% Syste Camera 
     Xin.D.Sys.Camera.DispGainBitRange = 0:4;                                    % Xin.D.Sys.PointGreyCamDispGainBitRange
@@ -131,33 +131,35 @@ for d = 1
     % calling FlyCapture 2.5.3.4 on R2015a 15.1.1 as of 20170927, tested
     
     i = 1;
-	Xin.D.Sys.PointGreyCam(i).DeviceName =      'Firefly MV FMVU-03MTM';
-    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono8_752x480_Mode0';
-    Xin.D.Sys.PointGreyCam(i).SerialNumber =	'19084735';
+    Xin.D.Sys.PointGreyCam(i).DeviceName =      'Chameleon3 CM3-U3-13Y3M';
+    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono8_640x512_Mode1'; %'F7_Mono8_640x512_Mode1'; % 'F7_Raw8_1280x1024_Mode0'; 
+    Xin.D.Sys.PointGreyCam(i).SerialNumber =	'16386588';
+	
     Xin.D.Sys.PointGreyCam(i).Comments =        'Pupillometry';
     Xin.D.Sys.PointGreyCam(i).TriggerSource =   'externalTriggerMode0-Source0';
     Xin.D.Sys.PointGreyCam(i).Located =         0;
  	Xin.D.Sys.PointGreyCam(i).FrameRate =       10;
     Xin.D.Sys.PointGreyCam(i).ShutterResv =     0;
-    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   143.69;
+    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   10.6;% 10.5;% 6.5; %10.62; %99; %143.69;
     Xin.D.Sys.PointGreyCam(i).GainPolar =       'Min';
-    Xin.D.Sys.PointGreyCam(i).PreviewRot =      0;  % 180;
+    Xin.D.Sys.PointGreyCam(i).PreviewRot =      180;  % 180;
     Xin.D.Sys.PointGreyCam(i).PreviewZoom =     1;
     Xin.D.Sys.PointGreyCam(i).RecUpdateRate =	NaN;
     Xin.D.Sys.PointGreyCam(i).RecFrameBlockNum =        NaN;     
 	Xin.D.Sys.PointGreyCam(i).UpdatePreviewHistogram =  0;  
-	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame;
+	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFramePupil;
     
     i = 2;
-	Xin.D.Sys.PointGreyCam(i).DeviceName =      'Firefly MV FMVU-03MTM';
-    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono8_752x480_Mode0';
-    Xin.D.Sys.PointGreyCam(i).SerialNumber =	'18186401';
+    Xin.D.Sys.PointGreyCam(i).DeviceName =      'Flea3 FL3-U3-13S2C';
+    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono8_656x524_Mode4'; %'F7_Mono8_656x524_Mode4'; %'F7_Mono12_1328x1048_Mode0'
+    Xin.D.Sys.PointGreyCam(i).SerialNumber =	'18061551';
+    
     Xin.D.Sys.PointGreyCam(i).Comments =        'Animal_Monitor';
     Xin.D.Sys.PointGreyCam(i).TriggerSource =   'externalTriggerMode0-Source0';
     Xin.D.Sys.PointGreyCam(i).Located =         0;
  	Xin.D.Sys.PointGreyCam(i).FrameRate =       10;
     Xin.D.Sys.PointGreyCam(i).ShutterResv =     0;
-    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   143.69;
+    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   8.2; %99; %143.69;
     Xin.D.Sys.PointGreyCam(i).GainPolar =       'Min';
     Xin.D.Sys.PointGreyCam(i).PreviewRot =      0;  % 90;
     Xin.D.Sys.PointGreyCam(i).PreviewZoom =     1;
@@ -168,11 +170,12 @@ for d = 1
 
 	i = 3;
     Xin.D.Sys.PointGreyCam(i).DeviceName =      'Grasshopper3 GS3-U3-23S6M';
-    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono12_1920x1200_Mode7';
+    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono12_1920x1200_Mode7'; % 'F7_Mono12_1920x1200_Mode0'; %
+    Xin.D.Sys.PointGreyCam(i).SerialNumber =	'17475746';
 %     Xin.D.Sys.PointGreyCam(i).SerialNumber =	'16307994';     % old, left
 %     Xin.D.Sys.PointGreyCam(i).SerialNumber =	'15452576';     % new, right
     Xin.D.Sys.PointGreyCam(i).Comments =        'Wide-field_Imaging';
-    Xin.D.Sys.PointGreyCam(i).TriggerSource =   'externalTriggerMode14-Source0';
+    Xin.D.Sys.PointGreyCam(i).TriggerSource =   'externalTriggerMode14-Source0'; % 'externalTriggerMode0-Source0'; %
     Xin.D.Sys.PointGreyCam(i).Located =         0;
  	Xin.D.Sys.PointGreyCam(i).FrameRate =       80;         % Max is 87.075;
     Xin.D.Sys.PointGreyCam(i).ShutterResv =     0.3962;     % in (ms) Reserve for shutter read  
@@ -184,7 +187,7 @@ for d = 1
     Xin.D.Sys.PointGreyCam(i).RecFrameBlockNum =        Xin.D.Sys.PointGreyCam(i).FrameRate/...
                                                         Xin.D.Sys.PointGreyCam(i).RecUpdateRate;      
 	Xin.D.Sys.PointGreyCam(i).UpdatePreviewHistogram =  1;    
-	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame;          
+	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame;           
     
 %     i = 4;                                  
 % 	Xin.D.Sys.PointGreyCam(i).DeviceName =      'Flea3 FL3-U3-88S2C';
@@ -228,10 +231,11 @@ for d = 1
 %         'TimebaseBridgeLine',     	'20MHzTimebase');
         
     Xin.D.Sys.NIDAQ.Config = struct(...
-        'deviceNames',              'Dev3',...                  % 6323
+        'deviceNames',              'Dev1',...                  % 6323
         'AI_chanIDs',               4,...                       % Power Meter Input
         'AI_rate',                  100e3,...                   % AI sampling rate
-        'AO_chanIDs',               2,...                       % Sound Output
+        'AO_chanIDs',               1,...                       % Sound Output %SOC
+        'AO_Juice_chanIDs',         0,...
         'CO_Frame_chanIDs',         3,...                       % Frame Trigger
         'CO_Monitor_chanIDs',       2,...                       % Monitor Trigger
         'CO_Start_chanIDs',         0,...                       % Start Trigger
@@ -240,8 +244,8 @@ for d = 1
         'DevTimebaseRate',          20e6,...                    % Dev sampClkTimebaseRate
         'OutStartSourceLine',       'Ctr0InternalOutput',...	$ Out Start Trigger Source
         'OutStartBridgeLine',       'RTSI6',...                 % Out Start Trigger Bridges
-        'OutTimebaseSourceLine',	'100kHzTimebase',...
-        'OutTimebaseBridgeLine',	'RTSI7');
+        'OutTimebaseSourceLine',	'100kHzTimebase');%,...
+        %'OutTimebaseBridgeLine',	'RTSI7');
 %         'DevStartSourceLine',       'Ctr0InternalOutput',...        $ Dev Start Trigger Source
 %         'DevStartSourceLine' has to be routed to RTSI6 first, otherwsie 
 %           the PCIe-6323 cannot figure out a configurable path for everything     
@@ -290,7 +294,8 @@ for d = 1
     T.chan(i).chanNames =           'SoundOut';
     T.chan(i).minVal =              -10;
     T.chan(i).maxVal =              10;
-    T.chan(i).units =               'DAQmx_Val_Volts';     
+    T.chan(i).units =               'DAQmx_Val_Volts';       
+    
     T.base.sampClkTimebaseRate =    Xin.D.Sys.NIDAQ.Config.DevTimebaseRate;      
     T.base.sampClkTimebaseSrc =     Xin.D.Sys.NIDAQ.Config.DevTimebaseSourceLine; 
     T.time.rate =                   Xin.D.Sys.Sound.SR; 
@@ -304,7 +309,30 @@ for d = 1
 %       % too busy for the frontside CPU core to have accurate timing
     T.write.writeData =             linspace(0, 5, T.time.rate)';
     Xin.D.Sys.NIDAQ.Task_AO_Xin =	T;
+    
+%     
+%     
+%     T =                             [];
+%     T.taskName =                    'Juice Task';            i = 1;
+%     T.chan(i).deviceNames =         Xin.D.Sys.NIDAQ.Dev_Names{1};
+%     T.chan(i).chanIDs =             Xin.D.Sys.NIDAQ.Config.AO_Juice_chanIDs;
+%     T.chan(i).chanNames =           'SoundOut';
+%     T.chan(i).minVal =              0.5;
+%     T.chan(i).maxVal =              4.5;
+%     T.chan(i).units =               'DAQmx_Val_Volts';     
+%     T.base.sampClkTimebaseRate =    Xin.D.Sys.NIDAQ.Config.DevTimebaseRate;      
+%     T.base.sampClkTimebaseSrc =     Xin.D.Sys.NIDAQ.Config.DevTimebaseSourceLine; 
+%     T.time.rate =                   Xin.D.Sys.Sound.SR; 
+%     T.time.sampleMode =             'DAQmx_Val_FiniteSamps'; 
+%     T.time.updateRate =             Xin.D.Sys.PointGreyCam(3).RecUpdateRate;  
+%     T.time.sampsPerChanToAcquire =	T.time.rate*4;
+%     T.trigger.triggerSource =       Xin.D.Sys.NIDAQ.Config.DevStartSourceLine;
+%     T.trigger.triggerEdge =         'DAQmx_Val_Rising';     
+%     T.write.writeData =             linspace(0.5, 4.5, T.time.rate)';
+%     Xin.D.Sys.NIDAQ.Task_Juice =	T;
+    
 
+    
     T =                             [];
     T.taskName =                    'Camera Frame Triggers Task';    i = 1;
     T.chan(i).deviceNames =         Xin.D.Sys.NIDAQ.Dev_Names{1};
@@ -351,11 +379,11 @@ end
 %% D.Mky (Monkey)
 for d = 1
 	%%%%%%%%%%%%%%%%%%%%%%% Monkey 
-    Xin.D.Mky.Lists.ID =            {   'M00x',     'M96B',     'M102D';
-                                        'M101D',	'',    '';
-                                        'M126D',    'M117B',	'M44D';
-                                        'M15E',     'M9G',	''     };
-    Xin.D.Mky.Lists.Side =          {'LEFT', 'RIGHT', ''};    
+    Xin.D.Mky.Lists.ID =            {   'TESTING', 'Cashew', 'Louwho';
+                                        'Hershey', 'Coconut',    'Scrooge';
+                                        'TESTING', 'Dali', 'Cardbury';
+                                        'Mickey', '',  '';};
+    Xin.D.Mky.Lists.Side =          {'RIGHT', 'LEFT', ''};    
     Xin.D.Mky.Lists.Prep =          {'Win', 'Skull', ''};
     
     Xin.D.Mky.ID =                  Xin.D.Mky.Lists.ID{1};

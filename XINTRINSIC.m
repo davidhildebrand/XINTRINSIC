@@ -1,6 +1,12 @@
 function varargout = XINTRINSIC(varargin)
 % This is the control software for Xindong's Xintrinsic setup in Wang lab.
 % 
+% addpath(genpath('E:\FreiwaldSync\XINTRINSIC\Software_sandbox'))
+% addpath(genpath('E:\FreiwaldSync\MarmoScope\ScanImage'))
+% savepath
+
+
+
 %% For Standarized SubFunction Callback Control
 if nargin==0                % INITIATION
     InitializeTASKS
@@ -510,12 +516,16 @@ function Ses_Start
                                     length( Xin.D.Ses.Load.SoundWave)*...
                                     Xin.D.Ses.Load.AddAttNumTotal*...
                                     Xin.D.Ses.Load.CycleNumTotal; 
+                                
+        
+                                
+                                
     % Xin.D.Sys.NIDAQ.Task_AO_Xin.everyN.everyNSamples = ...
     %                                 round(Xin.D.Sys.Sound.SR*Xin.D.Trl.Load.DurTotal);  
     if strcmp(Xin.D.Ses.Load.TrlOrder, 'Pre-arranged')     
         Xin.D.Sys.NIDAQ.Task_AO_Xin.write.writeData = Xin.D.Ses.Load.SoundWave;
     else
-        Xin.D.Sys.NIDAQ.Task_AO_Xin.write.writeData =...
+        Xin.D.Sys.NIDAQ.Task_AO_Xin.write.writeData =... %sound vectors get padded here
                                     reshape(Xin.D.Ses.Load.SoundMat(:,Xin.D.Ses.Load.TrlOrderSoundVec),[],1);
     end
         Xin.D.Ses.DataFileSize =	Xin.D.Vol.ImageHeight/Xin.D.Vol.VideoBin *...
@@ -685,6 +695,7 @@ function Ses_Start
         end
     end
     CtrlPointGreyCams('Trigger_Mode', 3, 'HardwareRec'); 
+    %CtrlPointGreyCams('Trigger_Mode', 3, 'SoftwareRec');
 	Xin.HW.PointGrey.Cam(3).hVid.TriggerRepeat = Xin.D.Ses.FrameTotal - 1;
 	start(          Xin.HW.PointGrey.Cam(3).hVid);
     msg =   [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSesStart\tPointGrey set up\r\n'];
@@ -726,7 +737,7 @@ function Ses_Start
         Xin.D.Vol.UpdFrameBlockS2 = sum(Xin.D.Vol.UpdFrameBlockS1, 1, 'native');  
         Xin.D.Vol.UpdFrameBlockS3 = sum(Xin.D.Vol.UpdFrameBlockS2, 3, 'native');
         Xin.D.Vol.UpdFrameBlockS4 = squeeze(Xin.D.Vol.UpdFrameBlockS3);
-        fwrite(hFile, Xin.D.Vol.UpdFrameBlockS4, 'uint16');
+        fwrite(hFile, Xin.D.Vol.UpdFrameBlockS4, 'uint16'); %SOC. Saves frames?
         % Metadata: AbsTime, FrameNumber, RelativeFrame, TriggerIndex
         Xin.D.Vol.UpdMetadataBlockS1 = struct2cell(Xin.D.Vol.UpdMetadataBlockRaw);
         Xin.D.Vol.UpdMetadataBlockS2 = cell2mat(Xin.D.Vol.UpdMetadataBlockS1(1,:)');

@@ -10,8 +10,12 @@ global Xin
 NI = Xin.D.Sys.NIDAQ;
 
 %% System
-    Xin.HW.NI.hSys = System();    
-        
+    try
+        Xin.HW.NI.hSys = System(); 
+        %if it doesn't work, you'll need to add ScanImage to the path   
+    catch
+        addpath('E:\FreiwaldSync\MarmoScope\ScanImage')
+    end
 %% Device and Reset
     for i = 1:length(NI.Dev_Names) 
         Xin.HW.NI.hDev{i} = Device(NI.Dev_Names{i});
@@ -60,7 +64,13 @@ NI = Xin.D.Sys.NIDAQ;
    	Xin.HW.NI.T.hTask_AO_Xin.createAOVoltageChan(...
         T.chan(1).deviceNames,              T.chan(1).chanIDs,...
         T.chan(1).chanNames,                T.chan(1).minVal,...
-        T.chan(1).maxVal,                   T.chan(1).units);     
+        T.chan(1).maxVal,                   T.chan(1).units);   
+%     Xin.HW.NI.T.hTask_AO_Xin.createAOVoltageChan(...
+%         T.chan(2).deviceNames,              T.chan(2).chanIDs,...
+%         T.chan(2).chanNames,                T.chan(2).minVal,...
+%         T.chan(2).maxVal,                   T.chan(2).units);   
+%     
+    
  	Xin.HW.NI.T.hTask_AO_Xin.set(...
         'sampClkTimebaseRate',              T.base.sampClkTimebaseRate,...
         'sampClkTimebaseSrc',               T.base.sampClkTimebaseSrc);      
@@ -78,6 +88,52 @@ NI = Xin.D.Sys.NIDAQ;
         T.write.writeData);
     Xin.HW.NI.T.hTask_AO_Xin.start();
     
+    
+    
+    T = NI.Task_AO_Xin;
+   	Xin.HW.NI.T.hTask_DO_Xin = Task('Juice Task');
+    Xin.HW.NI.T.hTask_DO_Xin.createDOChan(  ...
+            'Dev1',  ...
+            'port0/line0',  ...
+            'Juice');
+    Xin.HW.NI.T.hTask_DO_Xin.set(...
+        'sampClkTimebaseRate',              T.base.sampClkTimebaseRate,...
+        'sampClkTimebaseSrc',               T.base.sampClkTimebaseSrc);      
+    
+    Xin.HW.NI.T.hTask_DO_Xin.cfgSampClkTiming(...
+        T.time.rate,                        T.time.sampleMode,...
+        T.time.sampsPerChanToAcquire);
+    Xin.HW.NI.T.hTask_DO_Xin.cfgDigEdgeStartTrig(...
+        T.trigger.triggerSource,            T.trigger.triggerEdge);
+
+    
+    %Create Digital vector with 200ms high pulses for TTL activation of syringe pump
+    samples_sound = 4*length(T.write.writeData);
+    T.write.writeData_Juice_TTL = zeros(samples_sound,1);
+    
+    samples_with_rewards = 0;
+    more_reward = 1;
+    samples_TTL_high = T.time.rate / 5 ; %200 ms
+    while more_reward 
+        this_reward = round((rand * 6 + 1)*T.time.rate); 
+        samples_with_rewards = samples_with_rewards + this_reward;
+        
+        if samples_with_rewards + samples_TTL_high < samples_sound
+            T.write.writeData_Juice_TTL( samples_with_rewards : samples_with_rewards + samples_TTL_high) = 1;
+        else
+            more_reward = 0;
+        end
+        
+    end
+    
+    %figure; plot(T.write.writeData_Juice_TTL);
+    
+    Xin.HW.NI.T.hTask_DO_Xin.writeDigitalData(...
+        T.write.writeData_Juice_TTL); % writeDataDigitalauto-starts the task 
+    
+    %Xin.HW.NI.T.hTask_DO_Xin.start(); % writeDataDigitalauto-starts the task
+
+
 %% Counter Output Triggers
 % Start Trigger (The start trrigger for everything else)
     T = NI.Task_CO_TrigStart;
