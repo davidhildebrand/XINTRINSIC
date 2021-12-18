@@ -244,8 +244,8 @@ for d = 1
         'DevTimebaseRate',          20e6,...                    % Dev sampClkTimebaseRate
         'OutStartSourceLine',       'Ctr0InternalOutput',...	$ Out Start Trigger Source
         'OutStartBridgeLine',       'RTSI6',...                 % Out Start Trigger Bridges
-        'OutTimebaseSourceLine',	'100kHzTimebase');%,...
-        %'OutTimebaseBridgeLine',	'RTSI7');
+        'OutTimebaseSourceLine',	'100kHzTimebase',...
+        'OutTimebaseBridgeLine',	'RTSI7');
 %         'DevStartSourceLine',       'Ctr0InternalOutput',...        $ Dev Start Trigger Source
 %         'DevStartSourceLine' has to be routed to RTSI6 first, otherwsie 
 %           the PCIe-6323 cannot figure out a configurable path for everything     
