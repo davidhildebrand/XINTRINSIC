@@ -16,7 +16,7 @@ if  Xin.D.Ses.UpdateNumCurrent < Xin.D.Ses.UpdateNumTotal
     %% Recording Cycle Number Update  
 	c = floor(Xin.D.Ses.Load.DurCurrent/Xin.D.Ses.Load.CycleDurTotal)+1;  % Current Cycle Number
     if c~= Xin.D.Ses.Load.CycleNumCurrent && c<=Xin.D.Ses.Load.CycleNumTotal % && c
-        % Cycle Update: (c changed & c<=CNT)
+%         % Cycle Update: (c changed & c<=CNT)
         Xin.D.Ses.Load.CycleNumCurrent =    c;
         if c>1      % here is the best place to callback any cycle based stimulus control
         end
@@ -53,8 +53,11 @@ if  Xin.D.Ses.UpdateNumCurrent < Xin.D.Ses.UpdateNumTotal
         Xin.D.Trl.Load.AttAddCurrent =      Xin.D.Ses.Load.AddAtts(Xin.D.Trl.Load.AttNumCurrent);        
         Xin.D.Trl.Load.AttCurrent =         Xin.D.Trl.Load.AttDesginCurrent + Xin.D.Trl.Load.AttAddCurrent;
         
-        % Real Updates
-        invoke(Xin.HW.TDT.PA5,                  'SetAtten', Xin.D.Trl.Load.AttCurrent);        
+        % Real Updates, for PA5
+        if Xin.D.Sys.TDT_PA5_OnOff
+            Xin.HW.TDT.PA5.SetAtten(Xin.D.Trl.Load.AttCurrent);    
+        end
+        % Real Updates, for GUI
         set(Xin.UI.H.hTrl_NumCurrent_Edit,      'String',	num2str(Xin.D.Trl.Load.NumCurrent));
         set(Xin.UI.H.hTrl_StimNumCurrent_Edit,  'String',	Xin.D.Trl.Load.StimNumCurrent);
         set(Xin.UI.H.hTrl_StimNumNext_Edit,     'String',	Xin.D.Trl.Load.StimNumNext);

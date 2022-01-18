@@ -57,24 +57,38 @@ for d = 1
     %%%%%%%%%%%%%%%%%%%%%%% System Configurations
     SysConfigVarName =      {   'SystemOptionName',...
                                 'CameraDriver',...
-                                'CameraSerialNumber'}; 
-    Xin.D.Sys.Configurations = cell2table( cell(0,3),...
+                                'CameraSerialNumber',...
+                                'TDT_PA5_OnOff'}; 
+    Xin.D.Sys.Configurations = cell2table( cell(0,length(SysConfigVarName)),...
         'VariableNames',        SysConfigVarName);
     Xin.D.Sys.Configurations = [Xin.D.Sys.Configurations; table(...
-        {'Pointgrey_16307994_Xin1.0'},...
-        {'PointGrey'},...
-        {'16307994'},...
+        {'Pointgrey_16307994_PA5:ON_'},...
+        {'PointGrey'},  {'16307994'},   {1},...
         'VariableNames',            SysConfigVarName)];
     Xin.D.Sys.Configurations = [Xin.D.Sys.Configurations; table(...
-        {'Pointgrey_17475746_Freiwald'},...
-        {'PointGrey'},...
-        {'17475746'},...
+        {'Pointgrey_17475746_Freiwald_PA5:OFF_'},...
+        {'PointGrey'},  {'17475746'},   {0},...
         'VariableNames',            SysConfigVarName)];
     Xin.D.Sys.Configurations = [Xin.D.Sys.Configurations; table(...
-        {'Thorlabs_??????_Xin2.1?'},...
-        {'Thorlabs'},...
-        {'????????'},...
-        'VariableNames',            SysConfigVarName)];       
+        {'Pointgrey_17475746_Freiwald_PA5:ON_'},...
+        {'PointGrey'},  {'17475746'},   {1},...
+        'VariableNames',            SysConfigVarName)];
+    Xin.D.Sys.Configurations = [Xin.D.Sys.Configurations; table(...
+        {'Thorlabs_06019_PA5:OFF_'},...
+        {'Thorlabs'},   {'06019'},      {0},...
+        'VariableNames',            SysConfigVarName)];  
+    Xin.D.Sys.Configurations = [Xin.D.Sys.Configurations; table(...
+        {'Thorlabs_06019_PA5:ON_'},...
+        {'Thorlabs'},   {'06019'},      {1},...
+        'VariableNames',            SysConfigVarName)];   
+    Xin.D.Sys.Configurations = [Xin.D.Sys.Configurations; table(...
+        {'Thorlabs_08337_PA5:OFF_'},...
+        {'Thorlabs'},   {'08337'},      {0},...
+        'VariableNames',            SysConfigVarName)];  
+    Xin.D.Sys.Configurations = [Xin.D.Sys.Configurations; table(...
+        {'Thorlabs_08337_PA5:ON_'},...
+        {'Thorlabs'},   {'08337'},      {1},...
+        'VariableNames',            SysConfigVarName)];          
     
 	%%%%%%%%%%%%%%%%%%%%%%% System Light Configuration Information
     Xin.D.Sys.Light.Source =        'Green';
@@ -100,10 +114,6 @@ for d = 1
     Xin.D.Sys.CameraLens.Angle =        318;
     Xin.D.Sys.CameraLens.Aperture =     1.8;
     Xin.D.Sys.CameraLens.Apertures =    [1.8 2.8 4 5.6 8 11 16];
-    
-    %%%%%%%%%%%%%%%%%%%%%%% Syste Camera 
-    Xin.D.Sys.Camera.DispGainBitRange = 0:4;                                    % Xin.D.Sys.PointGreyCamDispGainBitRange
-    Xin.D.Sys.Camera.DispGainNumRange = 2.^Xin.D.Sys.Camera.DispGainBitRange;   % Xin.D.Sys.PointGreyCamDispGainNumRange
     
     %%%%%%%%%%%%%%%%%%%%%%% Thorlabs Power Meter     
     % Thorlabs Power Meter 1.0.2 is required as of 20170930
@@ -140,14 +150,16 @@ for d = 1
     Xin.D.Sys.PointGreyCam(i).Located =         0;
  	Xin.D.Sys.PointGreyCam(i).FrameRate =       10;
     Xin.D.Sys.PointGreyCam(i).ShutterResv =     0;
-    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   10.6;% 10.5;% 6.5; %10.62; %99; %143.69;
+    %Xin.D.Sys.PointGreyCam(i).ShutterTarget =   10.6;% 10.5;% 6.5; %10.62; %99; %143.69;
+    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   100;    % 143.69;
     Xin.D.Sys.PointGreyCam(i).GainPolar =       'Min';
     Xin.D.Sys.PointGreyCam(i).PreviewRot =      180;  % 180;
     Xin.D.Sys.PointGreyCam(i).PreviewZoom =     1;
     Xin.D.Sys.PointGreyCam(i).RecUpdateRate =	NaN;
     Xin.D.Sys.PointGreyCam(i).RecFrameBlockNum =        NaN;     
 	Xin.D.Sys.PointGreyCam(i).UpdatePreviewHistogram =  0;  
-	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame;
+	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame; 
+    Xin.D.Sys.PointGreyCam(i).DispRefCoord =    0;
     
     i = 2;
     Xin.D.Sys.PointGreyCam(i).DeviceName =      'Flea3 FL3-U3-13S2C';
@@ -159,27 +171,31 @@ for d = 1
     Xin.D.Sys.PointGreyCam(i).Located =         0;
  	Xin.D.Sys.PointGreyCam(i).FrameRate =       10;
     Xin.D.Sys.PointGreyCam(i).ShutterResv =     0;
-    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   8.2; %99; %143.69;
+    %Xin.D.Sys.PointGreyCam(i).ShutterTarget =   8.2; %99; %143.69;
+    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   100; % 143.69;
     Xin.D.Sys.PointGreyCam(i).GainPolar =       'Min';
-    Xin.D.Sys.PointGreyCam(i).PreviewRot =      0;  % 90;
+    Xin.D.Sys.PointGreyCam(i).PreviewRot =      270;  % 90;
     Xin.D.Sys.PointGreyCam(i).PreviewZoom =     1;
     Xin.D.Sys.PointGreyCam(i).RecUpdateRate =	NaN;
     Xin.D.Sys.PointGreyCam(i).RecFrameBlockNum =        NaN;     
 	Xin.D.Sys.PointGreyCam(i).UpdatePreviewHistogram =  0;  
-	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame;    
+	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame;   
+    Xin.D.Sys.PointGreyCam(i).DispRefCoord =    0; 
 
 	i = 3;
     Xin.D.Sys.PointGreyCam(i).DeviceName =      'Grasshopper3 GS3-U3-23S6M';
-    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono12_1920x1200_Mode7'; % 'F7_Mono12_1920x1200_Mode0'; %
     Xin.D.Sys.PointGreyCam(i).SerialNumber =	'17475746';
-%     Xin.D.Sys.PointGreyCam(i).SerialNumber =	'16307994';     % old, left
-%     Xin.D.Sys.PointGreyCam(i).SerialNumber =	'15452576';     % new, right
     Xin.D.Sys.PointGreyCam(i).Comments =        'Wide-field_Imaging';
     Xin.D.Sys.PointGreyCam(i).TriggerSource =   'externalTriggerMode14-Source0'; % 'externalTriggerMode0-Source0'; %
     Xin.D.Sys.PointGreyCam(i).Located =         0;
- 	Xin.D.Sys.PointGreyCam(i).FrameRate =       80;         % Max is 87.075;
-    Xin.D.Sys.PointGreyCam(i).ShutterResv =     0.3962;     % in (ms) Reserve for shutter read  
-    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   12.00;
+        Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono12_1920x1200_Mode7';
+        Xin.D.Sys.PointGreyCam(i).FrameRate =       80;         % Max is 87.075;
+        Xin.D.Sys.PointGreyCam(i).ShutterResv =     0.3962;     % in (ms) Reserve for shutter read  
+        Xin.D.Sys.PointGreyCam(i).ShutterTarget =   12.00;
+%         Xin.D.Sys.PointGreyCam(i).Format =          'F7_Raw12_1920x1200_Mode7';
+%         Xin.D.Sys.PointGreyCam(i).FrameRate =       100;	% Max is 109.589, but set in FlyCapture first;
+%         Xin.D.Sys.PointGreyCam(i).ShutterResv =     0.0154;	% in (ms) Reserve for shutter read  
+%         Xin.D.Sys.PointGreyCam(i).ShutterTarget =   9.90;
     Xin.D.Sys.PointGreyCam(i).GainPolar =       'Min';    
     Xin.D.Sys.PointGreyCam(i).PreviewRot =      0;
     Xin.D.Sys.PointGreyCam(i).PreviewZoom =     2;
@@ -187,7 +203,8 @@ for d = 1
     Xin.D.Sys.PointGreyCam(i).RecFrameBlockNum =        Xin.D.Sys.PointGreyCam(i).FrameRate/...
                                                         Xin.D.Sys.PointGreyCam(i).RecUpdateRate;      
 	Xin.D.Sys.PointGreyCam(i).UpdatePreviewHistogram =  1;    
-	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame;           
+	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame;   
+    Xin.D.Sys.PointGreyCam(i).DispRefCoord =    0;       
     
 %     i = 4;                                  
 % 	Xin.D.Sys.PointGreyCam(i).DeviceName =      'Flea3 FL3-U3-88S2C';
@@ -207,6 +224,47 @@ for d = 1
 % 	Xin.D.Sys.PointGreyCam(i).UpdatePreviewHistogram =  0;  
 % 	Xin.D.Sys.PointGreyCam(i).UpdatePreviewWindowFcn =	@updatePreviewFrame;                                      
 
+    %%%%%%%%%%%%%%%%%%%%%%% Thorlabs Scientific Cams
+    i = 1;
+    Xin.D.Sys.ThorlabsSciCam(i).DeviceName =        'CS2100M-USB';
+    Xin.D.Sys.ThorlabsSciCam(i).serialNumber =      '06019';
+    Xin.D.Sys.ThorlabsSciCam(i).ExposureTime_ms =   48;  
+%     Xin.D.Sys.ThorlabsSciCam(i).DataRate =          'FPS50';	%HFR: High Frame Rate    
+%     Xin.D.Sys.ThorlabsSciCam(i).FrameRate =         50;
+%     Xin.D.Sys.ThorlabsSciCam(i).PreviewRate =       10;
+    Xin.D.Sys.ThorlabsSciCam(i).DataRate =          'FPS30';	%LRN: Low Read Noise  
+    Xin.D.Sys.ThorlabsSciCam(i).FrameRate =         20;
+    Xin.D.Sys.ThorlabsSciCam(i).PreviewRate =       10;
+    Xin.D.Sys.ThorlabsSciCam(i).BinX =              2;
+    Xin.D.Sys.ThorlabsSciCam(i).BinY =              2;
+    Xin.D.Sys.ThorlabsSciCam(i).ROIOriginX =        0;
+    Xin.D.Sys.ThorlabsSciCam(i).ROIOriginY =        0;
+    Xin.D.Sys.ThorlabsSciCam(i).ROIWidth =          1920;
+    Xin.D.Sys.ThorlabsSciCam(i).ROIHeight =         1080;
+    Xin.D.Sys.ThorlabsSciCam(i).FramePerTrigger =   1;      % 0:continuous
+    Xin.D.Sys.ThorlabsSciCam(i).OperationMode =     'HardwareTriggered';
+    Xin.D.Sys.ThorlabsSciCam(i).TriggerPolarity =   'ActiveHigh';
+    Xin.D.Sys.ThorlabsSciCam(i).Running =           false;
+    Xin.D.Sys.ThorlabsSciCam(i).UpdatePreviewHistogram =    1;
+    Xin.D.Sys.ThorlabsSciCam(i).PreviewZoom =               2;
+    Xin.D.Sys.ThorlabsSciCam(i).RecUpdateRate =             5;
+    Xin.D.Sys.ThorlabsSciCam(i).pvRawWidth =	Xin.D.Sys.ThorlabsSciCam(i).ROIWidth/ Xin.D.Sys.ThorlabsSciCam(i).PreviewZoom;
+    Xin.D.Sys.ThorlabsSciCam(i).pvRawHeight =	Xin.D.Sys.ThorlabsSciCam(i).ROIHeight/Xin.D.Sys.ThorlabsSciCam(i).PreviewZoom;
+    
+    %%%%%%%%%%%%%%%%%%%%%%% System Main Camera 
+    Xin.D.Sys.Camera.DispGainBitRange = 0:4;                                    % Xin.D.Sys.PointGreyCamDispGainBitRange
+    Xin.D.Sys.Camera.DispGainNumRange = 2.^Xin.D.Sys.Camera.DispGainBitRange;   % Xin.D.Sys.PointGreyCamDispGainNumRange
+    Xin.D.Sys.Camera.DispWidth =        960;
+    Xin.D.Sys.Camera.DispHeight =       600;
+    Xin.D.Sys.Camera.DispImg =          uint8(zeros(Xin.D.Sys.Camera.DispHeight, Xin.D.Sys.Camera.DispWidth, 3));
+    Xin.D.Sys.Camera.DispHistMax =      uint8(zeros(Xin.D.Sys.Camera.DispHeight, 1));
+    Xin.D.Sys.Camera.DispHistMean =     uint8(zeros(Xin.D.Sys.Camera.DispHeight, 1)); 
+    Xin.D.Sys.Camera.DispHistMin =      uint8(zeros(Xin.D.Sys.Camera.DispHeight, 1));
+    Xin.D.Sys.Camera.SaveBinNum =       4;
+    Xin.D.Sys.Camera.MainFrameRate =    100;    % just for letting NIDAQ run
+    Xin.D.Sys.Camera.MainShutterResv =  2;      % in (ms) Reserve for shutter read
+    Xin.D.Sys.Camera.RecUpdateRate =    5;
+    
     %%%%%%%%%%%%%%%%%%%%%%% NI
     % ScanImage 5.2, released by end of 2016, support Matlab calling from 
     % Matlab R2015a/R2016a, to NI-DAQmx 15.5, in Windows 10 x64 
@@ -339,8 +397,8 @@ for d = 1
     T.chan(i).chanIDs =             Xin.D.Sys.NIDAQ.Config.CO_Frame_chanIDs;
     T.chan(i).chanNames =           'Main Imaging Camera Frame Trigger';
     T.chan(i).sourceTerminal =      Xin.D.Sys.NIDAQ.Config.DevTimebaseSourceLine;
-    T.chan(i).lowTicks =            Xin.D.Sys.NIDAQ.Config.DevTimebaseRate/Xin.D.Sys.PointGreyCam(3).FrameRate/2;
-    T.chan(i).highTicks =           Xin.D.Sys.NIDAQ.Config.DevTimebaseRate/Xin.D.Sys.PointGreyCam(3).FrameRate/2;
+    T.chan(i).lowTicks =            Xin.D.Sys.NIDAQ.Config.DevTimebaseRate/Xin.D.Sys.Camera.MainFrameRate/2;
+    T.chan(i).highTicks =           Xin.D.Sys.NIDAQ.Config.DevTimebaseRate/Xin.D.Sys.Camera.MainFrameRate/2;
     T.chan(i).initialDelay =        0;
     T.chan(i).idleState =           'DAQmx_Val_Low';                i = 2;
     T.chan(i).deviceNames =         Xin.D.Sys.NIDAQ.Dev_Names{1};
@@ -409,6 +467,7 @@ for d = 1
     Xin.D.Exp.Depths =              -1:5;
     Xin.D.Exp.RotationBPA =         0;          % Back Plate Angle Rotation
     Xin.D.Exp.RotationBPAs =        -15:0.5:15;
+    Xin.D.Exp.TakingRefImage =      0;
 end
 
 %% D.Ses (Session, one session should be a bunch of trials measure)
