@@ -28,7 +28,7 @@ Xin.UI.C = S.Color;
 %     S.FigSideWidth = 8; 
 
     S.FigWidth =        1250;
-    S.FigHeight =       1110;
+    S.FigHeight =       1000;%1110;
 %     S.FigWidth =        S.ScreenWidth - 2*S.FigSideWidth - S.FigSideToolbarWidth;
 %     S.FigHeight =       S.ScreenHeight - S.FigSideTitleHeight - S.FigSideWidth;
 
@@ -45,14 +45,14 @@ Xin.UI.C = S.Color;
   
 %% UI ImagePanel 
     % Global Spacer Scale
-    S.SP = 10;          % Panelette Side Spacer
+    S.SP = 4;          % Panelette Side Spacer
     S.SD = 4;           % Side Double Spacer
     S.S = 2;            % Small Spacer 
     S.PaneletteTitle = 18;
 
     % Image Scale
-    S.AxesImageWidth =      Xin.D.Sys.Camera.DispWidth;
-    S.AxesImageHeight =     Xin.D.Sys.Camera.DispHeight;
+    S.AxesImageWidth =      0.8 * Xin.D.Sys.Camera.DispWidth;
+    S.AxesImageHeight =     0.8 * Xin.D.Sys.Camera.DispHeight;
     S.AxesHistHeight =      256;
     
     % Image Panel Scale

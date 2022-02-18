@@ -52,7 +52,7 @@ for d = 1
     
     %%%%%%%%%%%%%%%%%%%%%%% Sound
     Xin.D.Sys.Sound.SR =    100e3;
-    Xin.D.Sys.SoundDir =	'Z:\=Sounds=\';
+    Xin.D.Sys.SoundDir =	'D:\XINTRINSIC\Sounds\';
         
     %%%%%%%%%%%%%%%%%%%%%%% System Configurations
     SysConfigVarName =      {   'SystemOptionName',...
@@ -297,10 +297,10 @@ for d = 1
         'CO_Frame_chanIDs',         3,...                       % Frame Trigger
         'CO_Monitor_chanIDs',       2,...                       % Monitor Trigger
         'CO_Start_chanIDs',         0,...                       % Start Trigger
-        'DevStartSourceLine',       'RTSI6',...                 $ Dev Start Trigger Source
+        'DevStartSourceLine',       'RTSI6',...                 % Dev Start Trigger Source
         'DevTimebaseSourceLine',	'20MHzTimebase',...         % Dev Timbebase Source
         'DevTimebaseRate',          20e6,...                    % Dev sampClkTimebaseRate
-        'OutStartSourceLine',       'Ctr0InternalOutput',...	$ Out Start Trigger Source
+        'OutStartSourceLine',       'Ctr0InternalOutput',...	% Out Start Trigger Source
         'OutStartBridgeLine',       'RTSI6',...                 % Out Start Trigger Bridges
         'OutTimebaseSourceLine',	'100kHzTimebase',...
         'OutTimebaseBridgeLine',	'RTSI7');

@@ -14,7 +14,7 @@ NI = Xin.D.Sys.NIDAQ;
         Xin.HW.NI.hSys = System(); 
         %if it doesn't work, you'll need to add ScanImage to the path   
     catch
-        addpath('E:\FreiwaldSync\MarmoScope\ScanImage')
+        addpath('C:\FreiwaldSync\MarmoScope\ScanImage')
     end
 %% Device and Reset
     for i = 1:length(NI.Dev_Names) 
