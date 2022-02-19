@@ -292,8 +292,8 @@ for d = 1
         'deviceNames',              'Dev1',...                  % 6323
         'AI_chanIDs',               4,...                       % Power Meter Input
         'AI_rate',                  100e3,...                   % AI sampling rate
-        'AO_chanIDs',               1,...                       % Sound Output %SOC
-        'AO_Juice_chanIDs',         0,...
+        'AO_chanIDs',               3,...                       % Sound Output %SOC
+        'AO_Juice_chanIDs',         2,...                       % Juice trigger %SOC
         'CO_Frame_chanIDs',         3,...                       % Frame Trigger
         'CO_Monitor_chanIDs',       2,...                       % Monitor Trigger
         'CO_Start_chanIDs',         0,...                       % Start Trigger
