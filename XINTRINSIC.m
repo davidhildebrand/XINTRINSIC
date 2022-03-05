@@ -5,6 +5,7 @@ function varargout = XINTRINSIC(varargin)
 % addpath(genpath('E:\FreiwaldSync\MarmoScope\ScanImage'))
 % savepath
 
+warning('off','images:imshow:reducingImage');
 
 %% For Standarized SubFunction Callback Control
 if nargin==0                % INITIATION
