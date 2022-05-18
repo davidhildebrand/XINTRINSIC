@@ -413,9 +413,9 @@ S.PnltCurrent.row = 2;      S.PnltCurrent.column = 1;
         WP.row =        S.PnltCurrent.row;         
         WP.column =     S.PnltCurrent.column;
             S.PnltCurrent.column = S.PnltCurrent.column + 1;
-        WP.text = { 'Take a reference image for the Experiment',...
+        WP.text = { 'Take reference image',...
                     'Turn the reference coordinates ON/OFF'};
-        WP.tip = {  'Take a reference image for the Experiment',...
+        WP.tip = {  'Take reference image',...
                     'Turn the reference coordinates ON/OFF' };
         WP.inputEnable = {'on','on'};
         Panelette(S, WP, 'Xin');
@@ -468,10 +468,10 @@ S.PnltCurrent.row = 2;      S.PnltCurrent.column = 4;
         WP.row =        S.PnltCurrent.row;         
         WP.column =     S.PnltCurrent.column;
             S.PnltCurrent.column = S.PnltCurrent.column + 1;
-        WP.text = { 'LOAD SOUND for the session',...
-                    'START a session, or CANCEL a                   session'};
-        WP.tip = {	'LOAD SOUND for the session',...
-                  	'START a session, or CANCEL a session' };
+        WP.text = { 'LOAD SOUND',...
+                    'START or CANCEL'};
+        WP.tip = {	'LOAD SOUND',...
+                  	'START or CANCEL' };
         WP.inputEnable = {'on','off'};
         Panelette(S, WP, 'Xin');
         Xin.UI.H.hSes_Load_Momentary =      Xin.UI.H0.Panelette{WP.row,WP.column}.hMomentary{1}; 
@@ -544,9 +544,9 @@ S.PnltCurrent.row = 2;      S.PnltCurrent.column = 4;
         WP.column   = S.PnltCurrent.column;
             S.PnltCurrent.column = S.PnltCurrent.column + 1;     
         WP.text = {	'',...
-                    'Sound Duration Total (s)'};
+                    'Sound Duration (s)'};
         WP.tip = {	'',...
-                    'Cycle Duration Total (s)'};
+                    'Cycle Duration (s)'};
         WP.inputValue = {   0,...
                             Xin.D.Ses.Load.SoundDurTotal};
         WP.inputFormat = {'','%5.1f'};    
@@ -556,16 +556,16 @@ S.PnltCurrent.row = 2;      S.PnltCurrent.column = 4;
         set(Xin.UI.H.hSes_SoundDurTotal_Edit,   'Tag', 'hSes_SoundDurTotal_Edit');
         clear WP;   
         
-    WP.name = 'Ses CycleTime';
+    WP.name = 'Ses CycleDur';
         WP.handleseed =	'Xin.UI.H0.Panelette';
         WP.type = 'Edit';           
         WP.row      = S.PnltCurrent.row;
         WP.column   = S.PnltCurrent.column;
             S.PnltCurrent.column = S.PnltCurrent.column + 1;     
-        WP.text = {	'Cycle Duration Current (s)',...
-                    'Cycle Duration Total (s)'};
-        WP.tip = {	'Cycle Duration Current (s)',...
-                    'Cycle Duration Total (s)'};
+        WP.text = {	'Current Cycle Time (s)',...
+                    'Cycle Duration (s)'};
+        WP.tip = {	'Current Cycle Time (s)',...
+                    'Cycle Duration (s)'};
         WP.inputValue = {   Xin.D.Ses.Load.CycleDurCurrent,...
                             Xin.D.Ses.Load.CycleDurTotal};
         WP.inputFormat = {'%5.1f','%5.1f'};    
@@ -583,10 +583,10 @@ S.PnltCurrent.row = 2;      S.PnltCurrent.column = 4;
         WP.row      = S.PnltCurrent.row;
         WP.column   = S.PnltCurrent.column;
             S.PnltCurrent.column = S.PnltCurrent.column + 1;     
-        WP.text = {	'Session Current Time (s)',...
-                    'Session Duraion (s)'};
-        WP.tip = {	'Session Current Time (s)',...
-                    'Session Duraion (s)'};
+        WP.text = {	'Current Session Time (s)',...
+                    'Session Duration (s)'};
+        WP.tip = {	'Current Session Time (s)',...
+                    'Session Duration (s)'};
         WP.inputValue = {   Xin.D.Ses.Load.DurCurrent,...
                             Xin.D.Ses.Load.DurTotal};
         WP.inputFormat = {'%d','%d'};    
@@ -857,5 +857,5 @@ S.PnltCurrent.row = 1;      S.PnltCurrent.column = 8;
 %     javax.swing.UIManager.setLookAndFeel('com.sun.java.swing.plaf.windows.WindowsLookAndFeel');
 
 %% LOG MSG
-msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSetupFigure\tSetup the GUI for the program\r\n'];
-updateMsg(Xin.D.Exp.hLog, msg);
+msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSetupFigure\tSetup the GUI for the program\r\n'];
+updateMsg(Xin.D.Sys.hLog, msg);

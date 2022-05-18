@@ -35,9 +35,9 @@ set(Xin.UI.FigTLSC(N).CP.hSys_CamDispGain_PotenEdit,	'Callback',	[mfilename, '('
 set(Xin.UI.FigTLSC(N).CP.hExp_RefImage_Momentary,       'Callback',	[mfilename, '(''Ref_Image'')']);
 % set(Xin.UI.FigTLSC(N).CP.hMon_PreviewSwitch_Rocker,	'SelectionChangeFcn',	[mfilename, '(''Preview_Switch'')']);
 	%% LOG MSG
-    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tInitializeCallbacks\tSetup the Thorlabs Sci Camera #' ...
+    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tInitializeCallbacks\tSetup the Thorlabs Sci Camera #' ...
         num2str(N), '''s GUI Callbacks\r\n'];
-    updateMsg(Xin.D.Exp.hLog, msg);
+    updateMsg(Xin.D.Sys.hLog, msg);
         
 function Cam_Shutter(varargin)
     global Xin
@@ -71,9 +71,9 @@ function Cam_Shutter(varargin)
     set(Xin.UI.FigTLSC(N).CP.hSys_CamShutter_PotenSlider,	'value',	Shutter);    
     set(Xin.UI.FigTLSC(N).CP.hSys_CamShutter_PotenEdit,     'string',   s);
 	%% LOG MSG
-    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tCam_Shutter\tSetup the ThorlabsSci Camera #' ...
+    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tCam_Shutter\tSetup the ThorlabsSci Camera #' ...
         num2str(N), '''s Shutter as: ' s ' (ms)\r\n'];
-    updateMsg(Xin.D.Exp.hLog, msg);
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
     
 function Cam_DispGain(varargin)
     global Xin
@@ -105,9 +105,9 @@ function Cam_DispGain(varargin)
     set(Xin.UI.FigTLSC(N).CP.hSys_CamDispGain_PotenSlider,	'value',	Xin.D.Sys.ThorlabsSciCam(N).DispGainBit);    
     set(Xin.UI.FigTLSC(N).CP.hSys_CamDispGain_PotenEdit,	'string',   s);   
     %% LOG MSG
-    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tDisp_Gain\tSetup the ThorlabsSci Camera #' ...
+    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tDisp_Gain\tSetup the ThorlabsSci Camera #' ...
         num2str(N), '''s DISP gain as: ' s '\r\n'];
-    updateMsg(Xin.D.Exp.hLog, msg);
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
 
     
 function Ref_Image(varargin)
@@ -203,8 +203,8 @@ function Ref_Image(varargin)
 %         {['Power Port: ',  	power,              ' (W); ']} ];
 %     end
     %% Save the Image
-    datestrfull =	datestr(now, 30);
-    dataname =      [datestrfull(3:end), DataNumApp];    
+    datestrfull =	[datestr(now, 'yyyymmdd'), 'd', datestr(now, 'HHMMSS'), 't'];
+    dataname =      [datestrfull, DataNumApp];    
     figure(...
         'Name',             dataname,...
         'NumberTitle',      'off',...
@@ -214,13 +214,13 @@ function Ref_Image(varargin)
     imshow(Xin.D.Sys.ThorlabsSciCam(N).RefImage, 'InitialMagnification','fit');
     box on
     imagedescription = strjoin(imageinfo);
-    imwrite(Xin.D.Sys.ThorlabsSciCam(N).RefImage, [Xin.D.Exp.DataDir, dataname, '.tif'],...
+    imwrite(Xin.D.Sys.ThorlabsSciCam(N).RefImage, [Xin.D.Exp.DataDir, dataname, '.png'],...
         'Compression',          'deflate',...
         'Description',          imagedescription);
     %% LOG MSG    
-    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tRef_Image\tA reference image has been taken from ThorlabsSci Camera #'...
+    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tRef_Image\tA reference image has been taken from ThorlabsSci Camera #'...
         num2str(N), ':xxx \r\n'];
-    updateMsg(Xin.D.Exp.hLog, msg);
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
     
 function SoftwareTriggerPreview(varargin) 
     global Xin
@@ -303,10 +303,10 @@ function SoftwareTriggerPreview(varargin)
         disp('GUI update on trigger mode does not apply');
     end    
     %% LOG MSG    
-    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSetupAndArm\tSetup the ThorlabsSci Camera #' ...
+    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSetupAndArm\tSetup the ThorlabsSci Camera #' ...
         num2str(N), '''s Bin#=', num2str(bin), '; ', trigger, 'wareTrigger for ' ...
         FPT 'frames (0=continuous)\r\n'];
-    updateMsg(Xin.D.Exp.hLog, msg);
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
     
 
     
@@ -358,9 +358,9 @@ function SoftwareTriggerPreview(varargin)
 %         end
 %     end
 %     %% LOG MSG
-%     msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tMon_PreviewSwitch\tThorlabsSci Camera #' ...
+%     msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tMon_PreviewSwitch\tThorlabsSci Camera #' ...
 %         num2str(N), ' switched to ', val, '\r\n'];
-%     updateMsg(Xin.D.Exp.hLog, msg);
+%     updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
 
     
 % function Trigger_Mode(varargin)
@@ -397,7 +397,7 @@ function SoftwareTriggerPreview(varargin)
 %         Xin.D.Sys.ThorlabsSciCam(N).TriggerCondition,...
 %         Xin.D.Sys.ThorlabsSciCam(N).TriggerSource);     
 %     %% LOG MSG    
-%     msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tTrigger_Mode\tSetup the ThorlabsSci Camera #' ...
+%     msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tTrigger_Mode\tSetup the ThorlabsSci Camera #' ...
 %         num2str(N), '''s Trigger mode selected as: "' ...
 %          Xin.D.Sys.ThorlabsSciCam(N).TriggerName '"\r\n'];
-%     updateMsg(Xin.D.Exp.hLog, msg);
+%     updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);

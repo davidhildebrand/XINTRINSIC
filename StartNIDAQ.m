@@ -88,12 +88,10 @@ NI = Xin.D.Sys.NIDAQ;
         T.write.writeData);
     Xin.HW.NI.T.hTask_AO_Xin.start();
     
-    
-    
     T = NI.Task_AO_Xin;
    	Xin.HW.NI.T.hTask_DO_Xin = Task('Juice Task');
     Xin.HW.NI.T.hTask_DO_Xin.createDOChan(  ...
-            'Dev1',  ...
+            'Intrinsic_PCIe6323',  ...
             'port0/line8',  ...
             'Juice');
     Xin.HW.NI.T.hTask_DO_Xin.set(...
@@ -171,11 +169,13 @@ NI = Xin.D.Sys.NIDAQ;
  
 %% Count Down 
     if Xin.D.Sys.TDT_PA5_OnOff
-        text =	[	'\fontsize{15} About to start imaging recording, \newline',...
-                    'Start the slave matlab code now if needed'];
+        text =	[	'\fontsize{15} About to start imaging recording.\newline',...
+                    'Run stimulus code if needed.\newline',...
+                    'Press OK to start.'];
     else
-        text =  [	'\fontsize{40}Setup PA5 attenuation manually before start! \newline',...
-                    'Run the slave matlab code now if needed'];
+        text =  [	'\fontsize{20}Setup manual PA5 attenuation.\newline',...
+                    'Run stimulus code if needed.\newline',...
+                    'Press OK to start.'];
     end
     uiwait( warndlg( text, 'start NIDAQ and record',...
                     struct('WindowStyle','modal','Interpreter','tex')   ) );
@@ -203,5 +203,5 @@ NI = Xin.D.Sys.NIDAQ;
     Xin.HW.NI.T.hTask_CO_TrigStart.start();
     
 %% LOG MSG
-msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tStartNIDAQ\tNI-DAQmx tasks initialized & triggered \r\n'];
-updateMsg(Xin.D.Exp.hLog, msg);
+msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tStartNIDAQ\tNI-DAQmx tasks initialized & triggered \r\n'];
+updateMsg(Xin.D.Sys.hLog, msg);

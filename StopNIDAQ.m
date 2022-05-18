@@ -25,5 +25,5 @@ Xin.HW.NI.T.hTask_DO_Xin.abort();
 Xin.HW.NI.T.hTask_DO_Xin.delete();
 
 %% LOG MSG
-msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tStopNIDAQ\tNI-DAQmx tasks terminated\r\n'];
-updateMsg(Xin.D.Exp.hLog, msg);
+msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tStopNIDAQ\tNI-DAQmx tasks terminated\r\n'];
+updateMsg(Xin.D.Sys.hLog, msg);

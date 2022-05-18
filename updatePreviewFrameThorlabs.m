@@ -24,7 +24,7 @@ if Xin.D.Ses.Status
     Xin.D.Ses.Save.SesFrameNum(Xin.D.Sys.ThorlabsSciCam(i).frameNumCurr) = ...
         Xin.D.Sys.ThorlabsSciCam(i).frameNumCurr;
     Xin.D.Ses.Save.SesTimestamps(Xin.D.Sys.ThorlabsSciCam(i).frameNumCurr,:) = ...
-        datestr(Xin.D.Sys.ThorlabsSciCam(i).frameTimerCurr, 'yy-mm-dd HH:MM:SS.FFF');
+        datestr(Xin.D.Sys.ThorlabsSciCam(i).frameTimerCurr, 'yyyy-mm-dd HH:MM:SS.FFF');
 end
 % if Xin.D.
 %% See if the time to Update the Preview

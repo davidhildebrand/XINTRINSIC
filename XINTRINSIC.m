@@ -1,9 +1,5 @@
 function varargout = XINTRINSIC(varargin)
 % This is the control software for Xindong's Xintrinsic setup in Wang lab.
-% 
-% addpath(genpath('E:\FreiwaldSync\XINTRINSIC\Software_sandbox'))
-% addpath(genpath('E:\FreiwaldSync\MarmoScope\ScanImage'))
-% savepath
 
 warning('off','images:imshow:reducingImage');
 
@@ -40,7 +36,7 @@ global Xin;
 Xin.D.Sys.NameFull =	mfilename('fullpath');	% Grab the current script's name
 [Xin.D.Sys.NamePath, Xin.D.Sys.Name, ~] = fileparts(Xin.D.Sys.NameFull);
 cd(Xin.D.Sys.NamePath);
-    SetupD;                                 % Initiate parameters
+SetupD;                                 % Initiate parameters
 [idx,tf] = listdlg(	'ListString',       Xin.D.Sys.Configurations.SystemOptionName,...
                 	'SelectionMode',    'single',...
                     'ListSize',         [350 180],...
@@ -52,7 +48,7 @@ if tf == 0  % cancelled in the GUI
     clear global;
 	return;
 end
-        Xin.D.Sys.TDT_PA5_OnOff = Xin.D.Sys.Configurations.TDT_PA5_OnOff{idx};
+Xin.D.Sys.TDT_PA5_OnOff = Xin.D.Sys.Configurations.TDT_PA5_OnOff{idx};
 switch Xin.D.Sys.Configurations.CameraDriver{idx}
     case 'PointGrey'
         % Setup PointGrey Cams
@@ -265,8 +261,8 @@ function GUI_Edit(varargin)
         otherwise
     end
 	%% MSG LOG
-    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tGUI_Edit\t' tag ' updated to ' s '\r\n'];
-    updateMsg(Xin.D.Exp.hLog, msg);
+    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tGUI_Edit\t' tag ' updated to ' s '\r\n'];
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
 
 function GUI_Rocker(varargin)
     global Xin;
@@ -311,23 +307,23 @@ function GUI_Rocker(varargin)
                 otherwise
                     disp('Light port not recognized!')
             end
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF'), '\tSys_LightConfig\tSetup the light Port & HeadCube as: ', ...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF'), '\tSys_LightConfig\tSetup the light Port & HeadCube as: ', ...
                 Xin.D.Sys.Light.Port, ' & ', Xin.D.Sys.Light.HeadCube, '\r\n'];
         case 'hSys_LightMonitor_Rocker'
             Xin.D.Sys.Light.Monitoring =   val(1);
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSys_LightMonitor\tSetup the Light Monitoring Mode as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSys_LightMonitor\tSetup the Light Monitoring Mode as: '...
                 Xin.D.Sys.Light.Monitoring '\r\n'];
         case 'hMky_Side_Rocker'
             Xin.D.Mky.Side = val;
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tMky_Side\tSetup the Monkey Side as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tMky_Side\tSetup the Monkey Side as: '...
                 Xin.D.Mky.Side '\r\n'];
         case 'hMky_Prep_Rocker'
             Xin.D.Mky.Prep = val;
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tMky_Prep\tSetup the Monkey Prep as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tMky_Prep\tSetup the Monkey Prep as: '...
                 Xin.D.Mky.Prep '\r\n'];
         case 'hSes_TrlOrder_Rocker'
             Xin.D.Ses.Load.TrlOrder = val;
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSes_TrlOrder\tSession trial order selected as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSes_TrlOrder\tSession trial order selected as: '...
                 Xin.D.Ses.Load.TrlOrder '\r\n']; 
             % Setup Session Loading
             SetupSesLoad('Xin', 'TrlOrder');
@@ -345,27 +341,27 @@ function GUI_Rocker(varargin)
                     end
                     set(hc(2), 'Enable', 'on'); 
                     GUI_Rocker('hVol_DisplayMode_Rocker', 'ROI');
-                    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tExp_SurROI\tExperiment surface ROI circled\r\n'];
+                    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tExp_SurROI\tExperiment surface ROI circled\r\n'];
                 case 2          % Disp ROI
                     switch Xin.D.Sys.Camera.MainCam
                         case 'Thorlabs';    Xin.D.Sys.ThorlabsSciCam(1).PreviewClipROI =	1;
                         case 'PointGrey';   Xin.D.Sys.PointGreyCam(3).PreviewClipROI =      1;
                     end
-                    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tVol_DisplayMode\tDispClipROI was selected as "1"\r\n'];
+                    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tVol_DisplayMode\tDispClipROI was selected as "1"\r\n'];
                 case 3          % Disp Full
                     switch Xin.D.Sys.Camera.MainCam
                         case 'Thorlabs';    Xin.D.Sys.ThorlabsSciCam(1).PreviewClipROI =	0;
                         case 'PointGrey';   Xin.D.Sys.PointGreyCam(3).PreviewClipROI =      0;
                     end
-                    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tVol_DisplayMode\tDispClipROI was selected as "0"\r\n'];
+                    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tVol_DisplayMode\tDispClipROI was selected as "0"\r\n'];
                 otherwise
             end 
         case 'hVol_DisplayRef_Rocker'
             switch js
                 case 1          % Load      
                     [Xin.D.Ses.DisplayRefImageFile, Xin.D.Ses.DisplayRefImageDir, ~] = ...
-                        uigetfile('.tif','Select a display reference ''TIF'' File',...
-                        [Xin.D.Sys.SoundDir, 'test.tif']);
+                        uigetfile('.png','Select a display reference ''PNG'' File',...
+                        [Xin.D.Exp.DataDir, 'test.png']);
                     RawRefImage = imread([Xin.D.Ses.DisplayRefImageDir Xin.D.Ses.DisplayRefImageFile]);
                     switch Xin.D.Sys.Camera.MainCam
                         case 'Thorlabs'
@@ -380,20 +376,20 @@ function GUI_Rocker(varargin)
                         	Xin.D.Sys.PointGreyCam(3).DisplayRefImage = ...
                                 uint8(255/65535*imresize(RawRefImage, size( Xin.D.Sys.PointGreyCam(3).DispImg))); 
                     end   
-                    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tVol_DisplayMode\tDisplay Ref Image loaded\r\n'];
+                    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tVol_DisplayMode\tDisplay Ref Image loaded\r\n'];
                     GUI_Rocker('hVol_DisplayRef_Rocker', 'Ref');
                 case 2          % Disp Ref 
                     switch Xin.D.Sys.Camera.MainCam
                         case 'Thorlabs';    Xin.D.Sys.ThorlabsSciCam(1).PreviewRef =	1;
                         case 'PointGrey';   Xin.D.Sys.PointGreyCam(3).PreviewRef =      1;
                     end
-                    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tVol_DisplayMode\tDisplay Ref Image displaying\r\n'];
+                    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tVol_DisplayMode\tDisplay Ref Image displaying\r\n'];
                 case 3          % Disp Raw     
                     switch Xin.D.Sys.Camera.MainCam
                         case 'Thorlabs';    Xin.D.Sys.ThorlabsSciCam(1).PreviewRef =	0;
                         case 'PointGrey';   Xin.D.Sys.PointGreyCam(3).PreviewRef =      0;
                     end
-                    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tVol_DisplayRef\tDo not display a Preview Ref\r\n'];
+                    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tVol_DisplayRef\tDo not display a Preview Ref\r\n'];
                 otherwise
             end 
         case 'hMon_SyncRec_Rocker'
@@ -423,7 +419,7 @@ function GUI_Rocker(varargin)
                                 'main camera as well']);
                 	Xin.D.Ses.MonitoringCams =  2;
             end
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSes_MonitoringCams\tSession monitoring cams recording selected as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSes_MonitoringCams\tSession monitoring cams recording selected as: '...
                 val '\r\n']; 
         case 'hMon_PreviewSwitch_Rocker'
             switch val
@@ -431,12 +427,12 @@ function GUI_Rocker(varargin)
                 case 'OFF'; Xin.D.Sys.ThorlabsSciCam(1).Running = 0;
                 otherwise
             end
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tMon_PreviewSwitch\tPreview Switch as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tMon_PreviewSwitch\tPreview Switch as: '...
                 val '\r\n'];
         otherwise
             errordlg('Rocker tag unrecognizable!');
     end
-    updateMsg(Xin.D.Exp.hLog, msg);
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
     
 function GUI_Toggle(varargin)
     global Xin;
@@ -479,19 +475,38 @@ function GUI_Toggle(varargin)
         case 'hSys_LightSource_Toggle'                
             Xin.D.Sys.Light.Source =        val;
             Xin.D.Sys.Light.Wavelength =    get(hc{is}.h(js), 'UserData');
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSys_LightSource\tSetup the light source as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSys_LightSource\tSetup the light source as: '...
                 Xin.D.Sys.Light.Source, sprintf(' @ %dnm', Xin.D.Sys.Light.Wavelength) '\r\n'];
         case 'hMky_ID_Toggle'
+            if ~isnan(Xin.D.Exp.hLog)
+                msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tMky_ID\tSwitching from Monkey ID: '...
+                    Xin.D.Mky.ID '\r\n'];
+                updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
+                fclose(Xin.D.Exp.hLog);
+            end
             Xin.D.Mky.ID = val;
-            Xin.D.Exp.DataDir =     [   Xin.D.Sys.DataDir,...
-                                        Xin.D.Mky.ID, '-',...
-                                        Xin.D.Exp.DateStr, '\'];  
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tMky_ID\tSetup the Monkey ID as: '...
+            Xin.D.Exp.Date =        now;
+            Xin.D.Exp.DateStr =     [datestr(Xin.D.Exp.Date, 'yyyymmdd') 'd'];
+            Xin.D.Exp.DataDir =     [Xin.D.Sys.DataDir, ...
+                                     Xin.D.Mky.ID, '_', ...
+                                     Xin.D.Exp.DateStr, filesep];
+            Xin.D.Exp.LogFileName = [Xin.D.Exp.DateStr, datestr(Xin.D.Exp.Date, 'HHMMSS'), 't_', Xin.D.Sys.Name, '_Experiment_Log.txt'];
+            Xin.D.Exp.LogFilePath = [Xin.D.Exp.DataDir, Xin.D.Exp.LogFileName];
+            if isempty(dir(Xin.D.Exp.DataDir))
+                mkdir(Xin.D.Exp.DataDir);
+            end
+            if Xin.D.Exp.hLog ~= -1 %&& ~strcmp(Xin.D.Mky.ID, 'TESTING')
+                Xin.D.Exp.hLog =    fopen(Xin.D.Exp.LogFilePath, 'w');
+                disp(['Opened experiment log: ', Xin.D.Exp.LogFilePath]);
+            else
+                Xin.D.Exp.hLog = NaN;
+            end
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tMky_ID\tSetup the Monkey ID as: '...
                 Xin.D.Mky.ID '\r\n']; 
         otherwise
              disp('GUI_Toggle tag not recognized!');
     end
-    updateMsg(Xin.D.Exp.hLog, msg);
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
       
 function GUI_Poten(varargin)
     global Xin;
@@ -527,7 +542,7 @@ function GUI_Poten(varargin)
             Xin.D.Sys.Light.Diffuser = Xin.D.Sys.Light.Diffusers(i);
             value = Xin.D.Sys.Light.Diffuser;
             set(hEdit,      'string',   sprintf('%dº',value));            
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSys_LightDiffuser\tupdated as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSys_LightDiffuser\tupdated as: '...
                 num2str(Xin.D.Sys.Light.Diffuser) ' degrees \r\n'];        
         case 'hSys_CameraLensAngle'
             value = round(value);
@@ -537,7 +552,7 @@ function GUI_Poten(varargin)
                 value = Xin.D.Sys.CameraLens.Angle;
             end
             set(hEdit,      'string',   sprintf('%dº',value));            
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSys_CameraLensAngle\tupdated as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSys_CameraLensAngle\tupdated as: '...
                 num2str(Xin.D.Sys.CameraLens.Angle) '\r\n'];
         case 'hSys_CameraLensAperture'
             if value < Xin.D.Sys.CameraLens.Apertures(1)	% value is from GUI, not commend
@@ -547,27 +562,27 @@ function GUI_Poten(varargin)
             Xin.D.Sys.CameraLens.Aperture = Xin.D.Sys.CameraLens.Apertures(i);
             value = log10(Xin.D.Sys.CameraLens.Aperture);
             set(hEdit,      'string',   sprintf('f/%.2g', Xin.D.Sys.CameraLens.Aperture));            
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSys_CameraLensAperture\tupdated as: f/'...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSys_CameraLensAperture\tupdated as: f/'...
                 num2str(Xin.D.Sys.CameraLens.Aperture) ' \r\n'];  
         case 'hExp_Depth'            
             [~, i] = min(abs(Xin.D.Exp.Depths - value));
             Xin.D.Exp.Depth = Xin.D.Exp.Depths(i);
             value = Xin.D.Exp.Depth;
             set(hEdit,      'string',   sprintf('%d turn',value));            
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tExp_Depth\tupdated as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tExp_Depth\tupdated as: '...
                 num2str(Xin.D.Exp.Depth) ' LT1 turns \r\n'];     
         case 'hExp_RotationBPA'        
             [~, i] = min(abs(Xin.D.Exp.RotationBPAs - value));
             Xin.D.Exp.RotationBPA = Xin.D.Exp.RotationBPAs(i);
             value = Xin.D.Exp.RotationBPA;
             set(hEdit,      'string',   sprintf('%3.1fº',value));            
-            msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tExp_RotationBPA\tupdated as: '...
+            msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tExp_RotationBPA\tupdated as: '...
                 num2str(Xin.D.Exp.RotationBPA) ' º \r\n'];      
         otherwise
              disp('GUI_Poten tag not recognized!');            
 	end
             set(hSlider,    'value',    value);
-    updateMsg(Xin.D.Exp.hLog, msg);
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
     
 function Ses_Load(varargin)
     global Xin;
@@ -577,7 +592,7 @@ function Ses_Load(varargin)
         % called by GUI:      
         [Xin.D.Ses.Load.SoundFile, Xin.D.Ses.Load.SoundDir, FilterIndex] = ...
             uigetfile('.wav','Select a Sound File',...
-            [Xin.D.Sys.SoundDir, 'test.wav']);
+            [Xin.D.Sys.SoundDir, filesep, 'test.wav']);
         if FilterIndex == 0
             return
         end
@@ -606,41 +621,44 @@ function Ses_Load(varargin)
     end
        
     %% LOG MSG
-    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSes_Load\tSession sound loaded as from file: "' ...
+    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSes_Load\tSession sound loaded as from file: "' ...
         Xin.D.Ses.Load.SoundFile '"\r\n'];
-    updateMsg(Xin.D.Exp.hLog, msg);
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
     
 function Ses_Start
     global Xin
     %% Check if this starts or cancels the recording session
     if Xin.D.Ses.Status == 1            % Session is running right now,
                                         % about to be cancelled
-        choice = questdlg('Session cancelling?',...
-            'Do you really want to CANCELL the current recording session?',...
-            'Yes, really want to cancel', 'No, clicked by error',...
-            'No, clicked by error');
+        choice = questdlg('Cancel session?',...
+            'CANCEL the current recording session?',...
+            'Yes', 'No',...
+            'No');
         switch choice
-            case 'No, clicked by error'
-                disp('session continues');
-            case 'Yes, really want to cancel'
+            case 'No'
+                disp('Continuing session...');
+            case 'Yes'
                 Xin.D.Ses.Status =	-1; % Session status switched to cancelling
-                disp('session about to be cancelled');
+                disp('Cancelling session...');
+                if isfile(Xin.D.Sys.TempStimFile)
+                    delete(Xin.D.Sys.TempStimFile);
+                end
         end           
         return;                         % Return and leave the cancelling procedures 
                                         % to the recording thread
     end                                 % Otherwise proceed to start recording
-    %% Check Surface Image
+    %% Check Reference Image
     tag =   0;
     try
         ds =    dir(Xin.D.Exp.DataDir);
         for i=3:length(ds)
-            if strcmp(ds(i).name(end-3:end), '.tif');   tag = 1;    end
+            if strcmp(ds(i).name(end-3:end), '.png');   tag = 1;    end
         end
     catch
     end
     if tag==0
-        errordlg({  'No surface image has been taken yet.',...
-                    'Take one before starting a session.'    });
+        errordlg({  'No surface reference image has been taken yet.',...
+                    'Take one before starting the experiment.'    });
         return;
     end
     %% Update Xin.D.Sys.NI & Power Meter
@@ -651,10 +669,7 @@ function Ses_Start
                                     length( Xin.D.Ses.Load.SoundWave)*...
                                     Xin.D.Ses.Load.AddAttNumTotal*...
                                     Xin.D.Ses.Load.CycleNumTotal; 
-                                
-        
-                                
-                                
+                                            
     % Xin.D.Sys.NIDAQ.Task_AO_Xin.everyN.everyNSamples = ...
     %                                 round(Xin.D.Sys.Sound.SR*Xin.D.Trl.Load.DurTotal);  
     if strcmp(Xin.D.Ses.Load.TrlOrder, 'Pre-arranged')     
@@ -763,13 +778,22 @@ function Ses_Start
         case 'Yes, Take a Recording'     
     end  
     %% Setup Recording File & Memory Allocation
-    datanamet =    datestr(now, 30);
-    dataname =     [datanamet(3:end),  '_',...
+    datanamet =    [datestr(now, 'yyyymmdd'), 'd', datestr(now, 'HHMMSS'), 't'];
+    dataname =     [datanamet,  '_Recording_',...
         Xin.D.Sys.Light.Source,  '_',...
         Xin.D.Sys.Light.Port,    '_',...
         Xin.D.Sys.Light.HeadCube];   
     Xin.D.Ses.DataFile =   [dataname '.rec'];
-    Xin.D.Ses.hDataFile =   fopen([Xin.D.Exp.DataDir, Xin.D.Ses.DataFile],'w');  
+    Xin.D.Ses.hDataFile =  fopen([Xin.D.Exp.DataDir, Xin.D.Ses.DataFile],'w');
+    if isfile(Xin.D.Sys.TempStimFile)
+        delete(Xin.D.Sys.TempStimFile);
+    end
+    ExpDataDir = Xin.D.Exp.DataDir;
+    StimDir = Xin.D.Sys.StimDir;
+    CycleNum = Xin.D.Ses.Load.CycleNumTotal;
+    CycleDur = Xin.D.Ses.Load.CycleDurTotal;
+    save(Xin.D.Sys.TempStimFile, 'ExpDataDir', 'StimDir', 'CycleNum', 'CycleDur');
+    clear ExpDataDir StimDir CycleNum CycleDur
     
     % new added @201124, for differentiate Thorlabs and PT cameras
         Xin.D.Vol.UpdFrameNum =	round(  Xin.D.Sys.Camera.MainFrameRate / ...
@@ -831,18 +855,18 @@ function Ses_Start
                                             Xin.D.Ses.Load.SoundFigureTitle];
     set(Xin.UI.H0.hFig, 'Name', Xin.D.Sys.FigureTitle);
     EnableGUI('inactive');    
-    msg =   [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSesStart\tSession is about to start with the sound: "' ...
+    msg =   [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSesStart\tSession is about to start with the sound: "' ...
         Xin.D.Ses.Load.SoundFile '"\r\n'];
-    updateMsg(Xin.D.Exp.hLog, msg);
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
     %% Camera Trigger Settings & Start the Video Recording   
     if Xin.D.Ses.MonitoringCams
         for i = 1:Xin.D.Ses.MonitoringCams
-            hVWC{i} = VideoWriter([Xin.D.Exp.DataDir, datanamet(3:end),'_#',...
+            hVWC{i} = VideoWriter([Xin.D.Exp.DataDir, datanamet,'_#',...
                 Xin.D.Sys.PointGreyCam(i).Comments,'.mj2'], 'Archival');
             hVWC{i}.FrameRate =             Xin.D.Sys.PointGreyCam(i).FrameRate;
             hVWC{i}.LosslessCompression =   true;
             hVWC{i}.MJ2BitDepth =           8;
-            hVWC{i} = VideoWriter([Xin.D.Exp.DataDir, datanamet(3:end),'_#',...
+            hVWC{i} = VideoWriter([Xin.D.Exp.DataDir, datanamet,'_#',...
                 Xin.D.Sys.PointGreyCam(i).Comments,'.avi'], 'Grayscale AVI');
             hVWC{i}.FrameRate =             Xin.D.Sys.PointGreyCam(i).FrameRate;
                 Xin.HW.PointGrey.Cam(i).hVid.LoggingMode =	'disk';            
@@ -862,8 +886,8 @@ function Ses_Start
             CtrlThorlabsSciCams('SetupAndArm', 1,   4,  1,  'hard');
             %                                  N,   bin,FPT,trigger         
     end
-    msg =   [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSesStart\tPointGrey set up\r\n'];
-    updateMsg(Xin.D.Exp.hLog, msg);
+    msg =   [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSesStart\tPointGrey set up\r\n'];
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
     %% Initialize Ses timing related stuff
     Xin.D.Ses.UpdateNumCurrent   = -1;  
     Xin.D.Ses.UpdateNumCurrentAI = 0;  
@@ -914,11 +938,11 @@ switch Xin.D.Sys.Camera.MainCam
         Xin.D.Vol.UpdMetadataBlockS4 = datestr(Xin.D.Vol.UpdMetadataBlockS2, 'yy-mm-dd HH:MM:SS.FFF');
         Xin.D.Ses.Save.SesFrameNum(    Xin.D.Vol.UpdMetadataBlockS3,:) = Xin.D.Vol.UpdMetadataBlockS3;
         Xin.D.Ses.Save.SesTimestamps(  Xin.D.Vol.UpdMetadataBlockS3,:) = Xin.D.Vol.UpdMetadataBlockS4;           
-        msg =   [datestr(now, 'yy/mm/dd HH:MM:SS.FFF')...
+        msg =   [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF')...
             '\tSesStart\tPointGrey frame block read: '...
             num2str(Xin.D.Vol.UpdMetadataBlockS3(1)) '-',...
             num2str(Xin.D.Vol.UpdMetadataBlockS3(end)) '\r\n'];
-        updateMsg(Xin.D.Exp.hLog, msg);
+        updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
         %% Update the Frame Schedule       
     	Xin.D.Ses.FrameRequested =  Xin.HW.PointGrey.Cam(3).hVid.TriggersExecuted;
        	Xin.D.Ses.FrameAcquired =   Xin.HW.PointGrey.Cam(3).hVid.FramesAcquired;          
@@ -931,8 +955,8 @@ switch Xin.D.Sys.Camera.MainCam
                                         % if All Frames Are Acquired and
                                         % Read, stopping
                 Xin.D.Ses.Status =	0;  % Session status switched to stopped  
-                msg =   [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSesStart\tAll frames recorded. Session about to stop\r\n'];
-                updateMsg(Xin.D.Exp.hLog, msg);
+                msg =   [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSesStart\tAll frames recorded. Session about to stop\r\n'];
+                updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
                 pause(1);
             break;
         elseif  Xin.D.Ses.Status ==	-1  % cancelling flag is raised 
@@ -956,8 +980,8 @@ switch Xin.D.Sys.Camera.MainCam
                                         % Read, stopping
                 Xin.D.Ses.Status =	0;  % Session status switched to stopped 
             Xin.D.Sys.ThorlabsSciCam(1).Running = false; 
-                msg =   [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSesStart\tAll frames recorded. Session about to stop\r\n'];
-                updateMsg(Xin.D.Exp.hLog, msg);
+                msg =   [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSesStart\tAll frames recorded. Session about to stop\r\n'];
+                updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
                 pause(1);
         elseif  Xin.D.Ses.Status ==	-1  % cancelling flag is raised 
             Xin.D.Sys.ThorlabsSciCam(1).Running = false;
@@ -977,7 +1001,7 @@ end
         end
         S = Xin.D.Ses.Save;
         save([Xin.D.Exp.DataDir, dataname '.mat'], 'S', '-v7.3');
-        msg =   [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSesStart\tData file saved. Session stopped\r\n']; 
+        msg =   [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSesStart\tData file saved. Session stopped\r\n']; 
         Xin.D.Ses.Load.SoundFigureTitle =   [   ': now "' ...
                                                 Xin.D.Ses.Load.SoundFile '" recording session has ended'];
     elseif	Xin.D.Ses.Status ==	-1      % cancelled
@@ -985,7 +1009,7 @@ end
         if strcmp(Xin.D.Sys.Camera.MainCam, 'PointGrey')
             stop(	Xin.HW.PointGrey.Cam(3).hVid);
         end
-        msg =   [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSesStart\tSession cancelled\r\n']; 
+        msg =   [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSesStart\tSession cancelled\r\n']; 
         Xin.D.Ses.Load.SoundFigureTitle =   [   ': now "' ...
                                                 Xin.D.Ses.Load.SoundFile '" recording session cancelled'];
                 Xin.D.Ses.Status =	0;  % Session status switched to stopped
@@ -1009,7 +1033,7 @@ end
         end
 	end
     %% MSG & GUI Updates
-    updateMsg(Xin.D.Exp.hLog, msg);   
+    updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);   
     Xin.D.Sys.FigureTitle =             [   Xin.D.Sys.FullName ...
                                             Xin.D.Ses.Load.SoundFigureTitle];
     set(Xin.UI.H0.hFig, 'Name', Xin.D.Sys.FigureTitle);
@@ -1024,10 +1048,10 @@ function Cam_CleanUp
         dirdatestrall =         cell2mat(dirall2(:,3));
         dirdatenumfiles =       datenum(dirdatestrall(3:end,:));
         [~,lastestfilenum] =	max(dirdatenumfiles);
-        lastestfilenum =        lastestfilenum +2;
+        lastestfilenum =        lastestfilenum + 2;
         lastfilename =          dirall2{lastestfilenum,1};
-        if ~strcmp(lastfilename(end-3:end), '.tif')
-            errordlg({  'The latest file in the experiment folder is not a surface image file.',...
+        if ~strcmp(lastfilename(end-3:end), '.png') && ~strcmp(Xin.D.Mky.ID, 'TESTING')
+            errordlg({  'The latest file in the experiment folder is not a surface reference image.',...
                         'Take one before finishing an experiment.'    });
             return;
         end 
@@ -1130,16 +1154,28 @@ function Cam_CleanUp
             end
             %% MSG LOG and close log file
             try
-                msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\t' Xin.D.Sys.Name...
+                msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\t' Xin.D.Sys.Name...
                     '\tXINTRINSIC ROCKED and goodbye! \r\n'];
-                updateMsg(Xin.D.Exp.hLog, msg);
-                fclose(  Xin.D.Exp.hLog);
-                if exist(Xin.D.Exp.DataDir, 'dir')   
-                    movefile(   [Xin.D.Sys.DataDir, Xin.D.Exp.LogFileName],...
-                                [Xin.D.Exp.DataDir, Xin.D.Exp.LogFileName]); 
+                updateMsg(Xin.D.Sys.hLog, msg);
+                if ~isnan(Xin.D.Exp.hLog) && Xin.D.Exp.hLog ~= -1
+                    updateMsg(Xin.D.Exp.hLog, msg)
+                    fclose(Xin.D.Exp.hLog);
+                end
+                fclose(Xin.D.Sys.hLog);
+                %if exist(Xin.D.Exp.DataDir, 'dir')   
+                %    movefile(   [Xin.D.Sys.DataDir, Xin.D.Exp.LogFileName],...
+                %                [Xin.D.Exp.DataDir, Xin.D.Exp.LogFileName]); 
+                %end
+            catch
+                warndlg('Could not close log file');
+            end
+            %% Delete temporary data
+            try
+                if isfile(Xin.D.Sys.TempStimFile)
+                    delete(Xin.D.Sys.TempStimFile);
                 end
             catch
-                warndlg('Can not write & close log file');
+                warndlg('Could not delete temporary stimulus data file');
             end
             %% Clear the workspace
             clear all;

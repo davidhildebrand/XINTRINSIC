@@ -146,11 +146,7 @@ for i = 1:length(Xin.D.Sys.ThorlabsSciCam)
 end
 
 %% LOG MSG
-msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSetupThorlabsCams\tSetup Thorlabs Cameras\r\n'];  
-updateMsg(Xin.D.Exp.hLog, msg);
+msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSetupThorlabsCams\tSetup Thorlabs Cameras\r\n'];  
+updateMsg(Xin.D.Sys.hLog, msg);
 
 return
-
-
-
-

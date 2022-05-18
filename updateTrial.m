@@ -21,8 +21,8 @@ if  Xin.D.Ses.UpdateNumCurrent < Xin.D.Ses.UpdateNumTotal
         if c>1      % here is the best place to callback any cycle based stimulus control
         end
         set(Xin.UI.H.hSes_CycleNumCurrent_Edit,'string',	num2str(Xin.D.Ses.Load.CycleNumCurrent));
-        msg =   [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tupdateTrial\tCycle # is ' num2str(c) '\r\n'];
-        updateMsg(Xin.D.Exp.hLog, msg);
+        msg =   [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tupdateTrial\tCycle # is ' num2str(c) '\r\n'];
+        updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
     end
     %% Recording Trial Number Update
     t =	floor(Xin.D.Ses.Load.CycleDurCurrent/Xin.D.Trl.Load.DurTotal)+1;  % Current Trial Number
@@ -66,8 +66,8 @@ if  Xin.D.Ses.UpdateNumCurrent < Xin.D.Ses.UpdateNumTotal
         set(Xin.UI.H.hTrl_AttDesignCurrent_Edit,'String',	sprintf('%5.1f (dB)',Xin.D.Trl.Load.AttDesginCurrent));
         set(Xin.UI.H.hTrl_AttAddCurrent_Edit,	'String',	sprintf('%5.1f (dB)',Xin.D.Trl.Load.AttAddCurrent));
         set(Xin.UI.H.hTrl_AttCurrent_Edit,      'String',	sprintf('%5.1f (dB)',Xin.D.Trl.Load.AttCurrent));
-        msg =   [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tupdateTrial\tTrial # is ' num2str(t) '\r\n'];
-        updateMsg(Xin.D.Exp.hLog, msg);
+        msg =   [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tupdateTrial\tTrial # is ' num2str(t) '\r\n'];
+        updateMsg(Xin.D.Exp.hLog, msg); updateMsg(Xin.D.Sys.hLog, msg);
     end
 
 end

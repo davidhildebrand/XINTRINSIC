@@ -1,4 +1,4 @@
- function SetupD
+function SetupD
 %% SetupD
 % To setup all the preset parameters for following procedures 
 
@@ -41,18 +41,21 @@ for d = 1
 	%%%%%%%%%%%%%%%%%%%%%%% Name & Folder
     % avoid writing again if already run by the main script
         Xin.D.Sys.FullName =	'[XINTRINSIC: X-linear polarization enhanced INTRINSIC signal & fluorescence imaging]';
-    if ~isfield(Xin.D.Sys, 'Name')      % No defined in the main program yet
+    if ~isfield(Xin.D.Sys, 'Name')      % Not defined in the main program yet
         Xin.D.Sys.Name =        'XINTRINSIC';
-    end    
-        Xin.D.Sys.DataDir =     ['D:',filesep,Xin.D.Sys.Name,filesep];
+    end
+        Xin.D.Sys.DataDir =     ['D:', filesep, Xin.D.Sys.Name, filesep];
+        Xin.D.Sys.StimDir =     ['C:', filesep, 'FreiwaldSync', filesep, ...
+            Xin.D.Sys.Name, filesep, 'Stimuli', filesep];
+        Xin.D.Sys.TempStimFile =    [Xin.D.Sys.DataDir, 'TempStimData.mat'];
     if isempty(dir(Xin.D.Sys.DataDir))  % Create the Sys.Data folder if not yet
         mkdir(Xin.D.Sys.DataDir);
-    end     
+    end
         Xin.D.Sys.FigureTitle = Xin.D.Sys.FullName;
     
     %%%%%%%%%%%%%%%%%%%%%%% Sound
     Xin.D.Sys.Sound.SR =    100e3;
-    Xin.D.Sys.SoundDir =	'C:\FreiwaldSync\XINTRINSIC\Stimuli\Auditory';% 'D:\XINTRINSIC\Sounds\';
+    Xin.D.Sys.SoundDir =	[Xin.D.Sys.StimDir 'Auditory'];
         
     %%%%%%%%%%%%%%%%%%%%%%% System Configurations
     SysConfigVarName =      {   'SystemOptionName',...
@@ -112,7 +115,7 @@ for d = 1
     
 	%%%%%%%%%%%%%%%%%%%%%%% System CameraLens Configuration Information
     Xin.D.Sys.CameraLens.Angle =        318;
-    Xin.D.Sys.CameraLens.Aperture =     1.8;
+    Xin.D.Sys.CameraLens.Aperture =     5.6;
     Xin.D.Sys.CameraLens.Apertures =    [1.8 2.8 4 5.6 8 11 16];
     
     %%%%%%%%%%%%%%%%%%%%%%% Thorlabs Power Meter     
@@ -142,7 +145,7 @@ for d = 1
     
     i = 1;
     Xin.D.Sys.PointGreyCam(i).DeviceName =      'Chameleon3 CM3-U3-13Y3M';
-    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono8_640x512_Mode1'; %'F7_Mono8_640x512_Mode1'; % 'F7_Raw8_1280x1024_Mode0'; 
+    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono8_640x512_Mode1';
     Xin.D.Sys.PointGreyCam(i).SerialNumber =	'16386588';
 	
     Xin.D.Sys.PointGreyCam(i).Comments =        'Pupillometry';
@@ -150,9 +153,9 @@ for d = 1
     Xin.D.Sys.PointGreyCam(i).Located =         0;
  	Xin.D.Sys.PointGreyCam(i).FrameRate =       10;
     Xin.D.Sys.PointGreyCam(i).ShutterResv =     0;
-    %Xin.D.Sys.PointGreyCam(i).ShutterTarget =   10.6;% 10.5;% 6.5; %10.62; %99; %143.69;
-    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   100;    % 143.69;
+    Xin.D.Sys.PointGreyCam(i).ShutterTarget =   2; %100; %10.5; % 6.5; %10.62; %99; %143.69;
     Xin.D.Sys.PointGreyCam(i).GainPolar =       'Min';
+    Xin.D.Sys.PointGreyCam(i).ROIPosition =     [0 104 288 220]; %[left top w h]
     Xin.D.Sys.PointGreyCam(i).PreviewRot =      0;
     Xin.D.Sys.PointGreyCam(i).PreviewZoom =     1;
     Xin.D.Sys.PointGreyCam(i).RecUpdateRate =	NaN;
@@ -163,7 +166,7 @@ for d = 1
     
     i = 2;
     Xin.D.Sys.PointGreyCam(i).DeviceName =      'Flea3 FL3-U3-13S2C';
-    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono8_656x524_Mode4'; %'F7_Mono8_656x524_Mode4'; %'F7_Mono12_1328x1048_Mode0'
+    Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono8_656x524_Mode4';
     Xin.D.Sys.PointGreyCam(i).SerialNumber =	'18061551';
     
     Xin.D.Sys.PointGreyCam(i).Comments =        'Animal_Monitor';
@@ -189,11 +192,11 @@ for d = 1
     Xin.D.Sys.PointGreyCam(i).TriggerSource =   'externalTriggerMode14-Source0'; % 'externalTriggerMode0-Source0'; %
     Xin.D.Sys.PointGreyCam(i).Located =         0;
         Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono12_1920x1200_Mode7';
-        Xin.D.Sys.PointGreyCam(i).FrameRate =       80;         % Max is 87.075;
+        Xin.D.Sys.PointGreyCam(i).FrameRate =       80;         % max 87.075;
         Xin.D.Sys.PointGreyCam(i).ShutterResv =     0.3962;     % in (ms) Reserve for shutter read  
         Xin.D.Sys.PointGreyCam(i).ShutterTarget =   12.00;
 %         Xin.D.Sys.PointGreyCam(i).Format =          'F7_Raw12_1920x1200_Mode7';
-%         Xin.D.Sys.PointGreyCam(i).FrameRate =       100;	% Max is 109.589, but set in FlyCapture first;
+%         Xin.D.Sys.PointGreyCam(i).FrameRate =       100;	% max 109.589, but set in FlyCapture first;
 %         Xin.D.Sys.PointGreyCam(i).ShutterResv =     0.0154;	% in (ms) Reserve for shutter read  
 %         Xin.D.Sys.PointGreyCam(i).ShutterTarget =   9.90;
     Xin.D.Sys.PointGreyCam(i).GainPolar =       'Min';    
@@ -289,7 +292,7 @@ for d = 1
 %         'TimebaseBridgeLine',     	'20MHzTimebase');
         
     Xin.D.Sys.NIDAQ.Config = struct(...
-        'deviceNames',              'Dev1',...                  % 6323
+        'deviceNames',              'Intrinsic_PCIe6323',...    % 6323
         'AI_chanIDs',               4,...                       % Power Meter Input
         'AI_rate',                  100e3,...                   % AI sampling rate
         'AO_chanIDs',               0,...                       % Sound Output
@@ -454,10 +457,10 @@ end
 %% D.Mky (Monkey)
 for d = 1
 	%%%%%%%%%%%%%%%%%%%%%%% Monkey 
-    Xin.D.Mky.Lists.ID =            {   'TESTING', 'Cashew', 'Louwho';
-                                        'Hershey', 'Coconut',    'Scrooge';
-                                        'TESTING', 'Dali', 'Cardbury';
-                                        'Mickey', '',  '';};
+    Xin.D.Mky.Lists.ID =            {   'TESTING', 'Cashew',  'Louwho';
+                                        'Hershey', 'Coconut', 'Scrooge';
+                                        'TESTING', 'Dali',    'Cadbury';
+                                        'Mickey',  '',        '';};
     Xin.D.Mky.Lists.Side =          {'RIGHT', 'LEFT', ''};    
     Xin.D.Mky.Lists.Prep =          {'Win', 'Skull', ''};
     
@@ -470,14 +473,19 @@ end
 for d = 1
     %%%%%%%%%%%%%%%%%%%%%%% Date
     Xin.D.Exp.Date =                now; 
-    Xin.D.Exp.DateStr =             datestr(Xin.D.Exp.Date, 'yymmdd-HH'); 
-    Xin.D.Exp.DataDir =             [   Xin.D.Sys.DataDir,...
-                                        Xin.D.Mky.ID, '-',...
-                                        Xin.D.Exp.DateStr, '\'];                            
-    Xin.D.Exp.LogFileName =         [datestr(now, 'yymmddTHHMMSS'), '_', Xin.D.Sys.Name, '_log.txt'];  
-    Xin.D.Exp.hLog =                fopen([Xin.D.Sys.DataDir, Xin.D.Exp.LogFileName], 'w');
-    msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tXINTRINSIC\tXINTRINSIC Opened, What a BEAUTIFUL day!\r\n'];
-        updateMsg(Xin.D.Exp.hLog, msg);
+    Xin.D.Exp.DateStr =             [datestr(Xin.D.Exp.Date, 'yyyymmdd') 'd']; 
+    Xin.D.Exp.DataDir =             [Xin.D.Sys.DataDir, ...
+                                     Xin.D.Mky.ID, '_', ...
+                                     Xin.D.Exp.DateStr, filesep];
+    Xin.D.Sys.LogFileName =         [Xin.D.Exp.DateStr, datestr(Xin.D.Exp.Date, 'HHMMSS'), 't_', Xin.D.Sys.Name, '_Session_Log.txt'];
+    Xin.D.Exp.LogFileName =         [Xin.D.Exp.DateStr, datestr(Xin.D.Exp.Date, 'HHMMSS'), 't_', Xin.D.Sys.Name, '_Experiment_Log.txt'];
+    Xin.D.Sys.LogFilePath =         [Xin.D.Sys.DataDir, filesep, 'Logs', filesep, Xin.D.Exp.LogFileName];
+    Xin.D.Exp.LogFilePath =         [Xin.D.Exp.DataDir, Xin.D.Exp.LogFileName];
+    Xin.D.Sys.hLog =                fopen(Xin.D.Sys.LogFilePath, 'w');
+    Xin.D.Exp.hLog =                NaN;
+    disp(['Opened system log: ', Xin.D.Sys.LogFilePath]);
+    msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tXINTRINSIC\tXINTRINSIC Opened, What a BEAUTIFUL day!\r\n'];
+        updateMsg(Xin.D.Sys.hLog, msg);
         
 	%%%%%%%%%%%%%%%%%%%%%%% Geometry
     Xin.D.Exp.Depth =               0;          % Z depth (in LT1 fine turns)
@@ -509,7 +517,7 @@ for d = 1
     Xin.D.Ses.Load.TrlIndexSoundNum =    [];
     Xin.D.Ses.Load.TrlIndexAddAttNum =   [];
     
-	Xin.D.Ses.Load.CycleNumTotal =       2;    
+	Xin.D.Ses.Load.CycleNumTotal =       8;    
     Xin.D.Ses.Load.CycleNumCurrent =     NaN; 
     Xin.D.Ses.Load.DurTotal =            NaN;
 	Xin.D.Ses.Load.DurCurrent =          NaN;   
@@ -612,5 +620,5 @@ for d = 1
 end
 
 %% LOG MSG
-msg = [datestr(now, 'yy/mm/dd HH:MM:SS.FFF') '\tSetupD\tXin.D initialized\r\n'];
-    updateMsg(Xin.D.Exp.hLog, msg);
+msg = [datestr(now, 'yyyy-mm-dd HH:MM:SS.FFF') '\tSetupD\tXin.D initialized\r\n'];
+    updateMsg(Xin.D.Sys.hLog, msg);
