@@ -45,7 +45,7 @@ for d = 1
         Xin.D.Sys.Name =        'XINTRINSIC';
     end
         Xin.D.Sys.DataDir =     ['D:', filesep, Xin.D.Sys.Name, filesep];
-        Xin.D.Sys.StimDir =     ['C:', filesep, 'FreiwaldSync', filesep, ...
+        Xin.D.Sys.StimDir =     ['E:', filesep, 'FreiwaldSync', filesep, ...
             Xin.D.Sys.Name, filesep, 'Stimuli', filesep];
         Xin.D.Sys.TempStimFile =    [Xin.D.Sys.DataDir, 'TempStimData.mat'];
     if isempty(dir(Xin.D.Sys.DataDir))  % Create the Sys.Data folder if not yet
@@ -146,7 +146,7 @@ for d = 1
     i = 1;
     Xin.D.Sys.PointGreyCam(i).DeviceName =      'Chameleon3 CM3-U3-13Y3M';
     Xin.D.Sys.PointGreyCam(i).Format =          'F7_Mono8_640x512_Mode1';
-    Xin.D.Sys.PointGreyCam(i).SerialNumber =	'16386588';
+    Xin.D.Sys.PointGreyCam(i).SerialNumber =	'22476543';
 	
     Xin.D.Sys.PointGreyCam(i).Comments =        'Pupillometry';
     Xin.D.Sys.PointGreyCam(i).TriggerSource =   'externalTriggerMode0-Source0';
@@ -263,7 +263,7 @@ for d = 1
     Xin.D.Sys.Camera.DispHistMax =      uint8(zeros(Xin.D.Sys.Camera.DispHeight, 1));
     Xin.D.Sys.Camera.DispHistMean =     uint8(zeros(Xin.D.Sys.Camera.DispHeight, 1)); 
     Xin.D.Sys.Camera.DispHistMin =      uint8(zeros(Xin.D.Sys.Camera.DispHeight, 1));
-    Xin.D.Sys.Camera.SaveBinNum =       4;
+    Xin.D.Sys.Camera.SaveBinNum =       4
     Xin.D.Sys.Camera.MainFrameRate =    100;    % just for letting NIDAQ run
     Xin.D.Sys.Camera.MainShutterResv =  2;      % in (ms) Reserve for shutter read
     Xin.D.Sys.Camera.RecUpdateRate =    5;
@@ -458,9 +458,9 @@ end
 for d = 1
 	%%%%%%%%%%%%%%%%%%%%%%% Monkey 
     Xin.D.Mky.Lists.ID =            {   'TESTING', 'Cashew',  'Louwho';
-                                        'Hershey', 'Coconut', 'Scrooge';
-                                        'TESTING', 'Dali',    'Cadbury';
-                                        'Mickey',  '',        '';};
+                                        'Hershey', 'Waffle', 'Scrooge';
+                                        'Curly', 'Dali',    'Cadbury';
+                                        'Mickey',  'Crumpet', 'Larry';};
     Xin.D.Mky.Lists.Side =          {'RIGHT', 'LEFT', ''};    
     Xin.D.Mky.Lists.Prep =          {'Win', 'Skull', ''};
     
@@ -581,7 +581,7 @@ for d = 1
     % Raw image parameters
     Xin.D.Vol.ImageHeight =  	1200;
     Xin.D.Vol.ImageWidth =    	1920; 
-    Xin.D.Vol.VideoBin =        4;
+    Xin.D.Vol.VideoBin =        4
     
     % Updates
     Xin.D.Vol.UpdFrameNum =     Xin.D.Sys.PointGreyCam(3).RecFrameBlockNum;
