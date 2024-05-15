@@ -14,7 +14,9 @@ NI = Xin.D.Sys.NIDAQ;
         Xin.HW.NI.hSys = System(); 
         %if it doesn't work, you'll need to add ScanImage to the path   
     catch
-        addpath('C:\FreiwaldSync\MarmoScope\ScanImage')
+        ScanImagePath = 'E:\FreiwaldSync\MarmoScope\ScanImage\SI-Basic_2021.1.0_(2021-12-22)_2af5d7cfec'
+        addpath(genpath(ScanImagePath))
+        Xin.HW.NI.hSys = System(); 
     end
 %% Device and Reset
     for i = 1:length(NI.Dev_Names) 
@@ -88,11 +90,12 @@ NI = Xin.D.Sys.NIDAQ;
         T.write.writeData);
     Xin.HW.NI.T.hTask_AO_Xin.start();
     
+    %??
     T = NI.Task_AO_Xin;
    	Xin.HW.NI.T.hTask_DO_Xin = Task('Juice Task');
     Xin.HW.NI.T.hTask_DO_Xin.createDOChan(  ...
             'Intrinsic_PCIe6323',  ...
-            'port0/line8',  ...
+            'port0/line1',  ...
             'Juice');
     Xin.HW.NI.T.hTask_DO_Xin.set(...
         'sampClkTimebaseRate',              T.base.sampClkTimebaseRate,...
@@ -113,7 +116,7 @@ NI = Xin.D.Sys.NIDAQ;
     more_reward = 1;
     samples_TTL_high = T.time.rate / 5 ; %200 ms
     while more_reward 
-        this_reward = round((rand * 6 + 1)*T.time.rate); 
+        this_reward = round((rand * 6 + 5)*T.time.rate); 
         samples_with_rewards = samples_with_rewards + this_reward;
         
         if samples_with_rewards + samples_TTL_high < samples_sound
